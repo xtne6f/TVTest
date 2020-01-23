@@ -20,3 +20,26 @@ CAS 処理は実装されていないため、一般のテレビ放送を視聴�
 ライセンス
 ----------
 GPL v2
+
+
+このフォークについて
+----------
+[DBCTRADO/TVTest](https://github.com/DBCTRADO/TVTest) をMSYS2上の [MinGW-w64](https://sourceforge.net/projects/mingw-w64) でビルドできるよう調整します。
+
+[ビルド]
+1. [MSYS2](https://www.msys2.org/) の `msys2-i686-日付.exe`(32bitOS用) または `msys2-x86_64-日付.exe`(64bitOS用) をインストール  
+   上記サイトに従って`pacman -Syu` →(必要なら)`pacman -Su`でパッケージをアップデート
+2. スタートメニューの"MSYS2 MinGW 32-bit"(x64ビルド時は64-bit)を開き、起動した黒窓で以下を実行してmakeとgccとcmakeをインストール  
+   `$ pacman -S make mingw-w64-i686-gcc mingw-w64-i686-cmake` (x86ビルド時)  
+   `$ pacman -S make mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake` (x64ビルド時)
+3. つづけて以下を実行 (この文書が"C:\TVTest"にある場合。src/LibISDBに[LibISDB](https://github.com/xtne6f/LibISDB)を展開しておく)
+   ```
+   $ cd /c/TVTest/src
+   ($ cd /c/TVTest/sdk/Samples #サンプルプラグイン)
+   $ mkdir build
+   $ cd build
+   $ cmake -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel ..
+   ($ cmake -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel -DGEN_TVTEST_VERSION_HASH=1 -DGEN_LIBISDB_VERSION_HASH=1 .. #バージョン情報にgitハッシュを表示)
+   ($ cmake -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel -DNOMAKE_LIBISDB=1 .. #LibISDBをビルドしない)
+   $ make
+   ```

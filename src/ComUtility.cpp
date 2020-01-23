@@ -110,7 +110,12 @@ CVariant &CVariant::operator=(VARIANT &&var)
 
 HRESULT CVariant::Assign(const VARIANT &var)
 {
-	return ::VariantCopy(this, &var);
+	return ::VariantCopy(this,
+#ifdef __MINGW32__
+		const_cast<VARIANT*>(&var));
+#else
+		&var);
+#endif
 }
 
 
@@ -134,7 +139,13 @@ HRESULT CVariant::ToString(String *pStr) const
 	VARIANT var;
 
 	::VariantInit(&var);
-	HRESULT hr = ::VariantChangeType(&var, this, VARIANT_ALPHABOOL, VT_BSTR);
+	HRESULT hr = ::VariantChangeType(&var,
+#ifdef __MINGW32__
+		const_cast<VARIANT*>(static_cast<const VARIANT*>(this)),
+#else
+		this,
+#endif
+		VARIANT_ALPHABOOL, VT_BSTR);
 	if (FAILED(hr))
 		return hr;
 

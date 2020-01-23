@@ -266,6 +266,7 @@ namespace TVTest
 		UINT m_TimerResolution;
 		bool m_fNoEpg;
 
+		mutable MutexLock m_Lock;
 		StatusFlag m_AsyncStatusUpdatedFlags;
 
 		void ConnectFilter(
