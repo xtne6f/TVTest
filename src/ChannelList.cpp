@@ -576,7 +576,10 @@ bool CChannelList::Sort(SortType Type, bool fDescending)
 					Cmp = Channel1->GetServiceID() - Channel2->GetServiceID();
 					break;
 				default:
+#ifdef _MSC_VER
 					__assume(0);
+#endif
+					break;
 				}
 
 				return m_fDescending ? Cmp > 0 : Cmp < 0;

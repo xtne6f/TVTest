@@ -65,8 +65,13 @@ namespace TVTest
 
 #define lengthof _countof
 
+#ifdef _MSC_VER
 #define ABSTRACT_DECL        __declspec(novtable)
 #define ABSTRACT_CLASS(name) ABSTRACT_DECL name abstract
+#else
+#define ABSTRACT_DECL
+#define ABSTRACT_CLASS(name) name
+#endif
 
 #define CHANNEL_FILE_EXTENSION          TEXT(".ch2")
 #define DEFERRED_CHANNEL_FILE_EXTENSION TEXT(".ch1")

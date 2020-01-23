@@ -106,7 +106,7 @@ namespace TVTest
 #undef TRACE
 #define TRACE TVTest::DebugTrace
 #else
-#define TRACE __noop
+#define TRACE(fmt, ...) static_cast<void>(0)
 #endif
 
 #ifndef _DEBUG
