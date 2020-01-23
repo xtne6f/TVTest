@@ -1301,7 +1301,7 @@ void CInformationPanel::CSignalLevelItem::Draw(HDC hdc, const RECT &Rect)
 	if (m_fShowSignalLevel) {
 		TCHAR szSignalLevel[32];
 		CoreEngine.GetSignalLevelText(m_SignalLevel, szSignalLevel, lengthof(szSignalLevel));
-		Length = StringPrintf(szText, TEXT("%s / "), szSignalLevel);
+		Length = StringPrintf(szText, TEXT("%") T_PRIS TEXT(" / "), szSignalLevel);
 	}
 	CoreEngine.GetBitRateText(m_BitRate, szText + Length, lengthof(szText) - Length);
 

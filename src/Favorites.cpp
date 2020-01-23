@@ -613,7 +613,7 @@ void CFavoritesManager::SaveFolder(const CFavoriteFolder *pFolder, const String 
 					if (pChannel->GetForceBonDriverChange())
 						Flags |= CHANNEL_FLAG_FORCEBONDRIVERCHANGE;
 					StringUtility::Format(
-						ChannelSpec, TEXT(",%s,%d,%d,%d,%d,%d,%d,%u"),
+						ChannelSpec, TEXT(",%") T_PRIS TEXT(",%d,%d,%d,%d,%d,%d,%u"),
 						pChannel->GetBonDriverFileName(),
 						ChannelInfo.GetSpace(),
 						ChannelInfo.GetChannelIndex(),
@@ -1217,7 +1217,7 @@ int CFavoritesMenu::GetEventText(
 		*pEventInfo, szTime, lengthof(szTime), EpgUtil::FormatEventTimeFlag::Hour2Digits);
 
 	return StringPrintf(
-		pszText, MaxLength, TEXT("%s %s"),
+		pszText, MaxLength, TEXT("%") T_PRIS TEXT(" %") T_PRIS,
 		szTime, pEventInfo->EventName.c_str());
 }
 

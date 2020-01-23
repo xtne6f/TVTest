@@ -840,21 +840,21 @@ void CPlugin::Free()
 	if (m_hLib != nullptr) {
 		LPCTSTR pszFileName = ::PathFindFileName(m_FileName.c_str());
 
-		App.AddLog(TEXT("%s の終了処理を行っています..."), pszFileName);
+		App.AddLog(TEXT("%") T_PRIS TEXT(" の終了処理を行っています..."), pszFileName);
 
 		FinalizeFunc pFinalize =
 			reinterpret_cast<FinalizeFunc>(::GetProcAddress(m_hLib, "TVTFinalize"));
 		if (pFinalize == nullptr) {
 			App.AddLog(
 				CLogItem::LogType::Error,
-				TEXT("%s のTVTFinalize()関数のアドレスを取得できません。"),
+				TEXT("%") T_PRIS TEXT(" のTVTFinalize()関数のアドレスを取得できません。"),
 				pszFileName);
 		} else {
 			pFinalize();
 		}
 		::FreeLibrary(m_hLib);
 		m_hLib = nullptr;
-		App.AddLog(TEXT("%s を解放しました。"), pszFileName);
+		App.AddLog(TEXT("%") T_PRIS TEXT(" を解放しました。"), pszFileName);
 	}
 
 	for (auto &Item : m_StatusItemList) {
@@ -1215,7 +1215,7 @@ LRESULT CPlugin::SendPluginMessage(
 		return Result;
 	GetAppClass().AddLog(
 		CLogItem::LogType::Error,
-		TEXT("応答が無いためプラグインからのメッセージを処理できません。(%s : %u)"),
+		TEXT("応答が無いためプラグインからのメッセージを処理できません。(%") T_PRIS TEXT(" : %u)"),
 		::PathFindFileName(MessageParam.pPlugin->m_FileName.c_str()), Message);
 	return FailedResult;
 }
@@ -1704,7 +1704,7 @@ LRESULT CPlugin::OnCallback(PluginParam *pParam, UINT Message, LPARAM lParam1, L
 				return FALSE;
 
 			LPCTSTR pszFileName = ::PathFindFileName(m_FileName.c_str());
-			GetAppClass().AddLog((CLogItem::LogType)lParam2, TEXT("%s : %s"), pszFileName, pszText);
+			GetAppClass().AddLog((CLogItem::LogType)lParam2, TEXT("%") T_PRIS TEXT(" : %") T_PRIS, pszFileName, pszText);
 		}
 		return TRUE;
 
@@ -3815,7 +3815,7 @@ bool CPlugin::OnGetSetting(SettingInfo *pSetting) const
 	}
 #ifdef _DEBUG
 	else {
-		TRACE(TEXT("CPlugin::OnGetSettings() : Unknown setting \"%s\"\n"), pSetting->pszName);
+		TRACE(TEXT("CPlugin::OnGetSettings() : Unknown setting \"%") T_PRIS TEXT("\"\n"), pSetting->pszName);
 	}
 #endif
 
@@ -4511,7 +4511,7 @@ bool CPluginManager::LoadPlugins(LPCTSTR pszDirectory, const std::vector<LPCTSTR
 				}
 				if (fExclude) {
 					App.AddLog(
-						TEXT("%s は除外指定されているため読み込まれません。"),
+						TEXT("%") T_PRIS TEXT(" は除外指定されているため読み込まれません。"),
 						wfd.cFileName);
 					continue;
 				}
@@ -4524,18 +4524,18 @@ bool CPluginManager::LoadPlugins(LPCTSTR pszDirectory, const std::vector<LPCTSTR
 
 			::PathCombine(szFileName, pszDirectory, wfd.cFileName);
 			if (pPlugin->Load(szFileName)) {
-				App.AddLog(TEXT("%s を読み込みました。"), wfd.cFileName);
+				App.AddLog(TEXT("%") T_PRIS TEXT(" を読み込みました。"), wfd.cFileName);
 				m_PluginList.emplace_back(pPlugin);
 			} else {
 				App.AddLog(
 					CLogItem::LogType::Error,
-					TEXT("%s : %s"),
+					TEXT("%") T_PRIS TEXT(" : %") T_PRIS,
 					wfd.cFileName,
 					!IsStringEmpty(pPlugin->GetLastErrorText()) ?
 					pPlugin->GetLastErrorText() :
 					TEXT("プラグインを読み込めません。"));
 				if (!IsStringEmpty(pPlugin->GetLastErrorAdvise()))
-					App.AddLog(CLogItem::LogType::Error, TEXT("(%s)"), pPlugin->GetLastErrorAdvise());
+					App.AddLog(CLogItem::LogType::Error, TEXT("(%") T_PRIS TEXT(")"), pPlugin->GetLastErrorAdvise());
 				delete pPlugin;
 			}
 		} while (::FindNextFile(hFind, &wfd));

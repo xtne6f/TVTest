@@ -168,7 +168,7 @@ void CEventInfoPopup::SetEventInfo(const LibISDB::EventInfo *pEventInfo)
 			m_EventInfo.VideoList[0].StreamContent,
 			m_EventInfo.VideoList[0].ComponentType);
 		if (pszVideo != nullptr) {
-			Formatter.AppendFormat(TEXT("\r\n■ 映像： %s"), pszVideo);
+			Formatter.AppendFormat(TEXT("\r\n■ 映像： %") T_PRIS, pszVideo);
 		}
 	}
 
@@ -200,10 +200,10 @@ void CEventInfoPopup::SetEventInfo(const LibISDB::EventInfo *pEventInfo)
 		CEpgGenre EpgGenre;
 		LPCTSTR pszGenre = EpgGenre.GetText(Genre1, -1);
 		if (pszGenre != nullptr) {
-			Formatter.AppendFormat(TEXT("\r\n■ ジャンル： %s"), pszGenre);
+			Formatter.AppendFormat(TEXT("\r\n■ ジャンル： %") T_PRIS, pszGenre);
 			pszGenre = EpgGenre.GetText(Genre1, Genre2);
 			if (pszGenre != nullptr)
-				Formatter.AppendFormat(TEXT(" - %s"), pszGenre);
+				Formatter.AppendFormat(TEXT(" - %") T_PRIS, pszGenre);
 		}
 	}
 
@@ -275,17 +275,17 @@ void CEventInfoPopup::FormatAudioInfo(
 		LibISDB::GetLanguageText_ja(pAudioInfo->LanguageCode2, szLang2, lengthof(szLang2));
 		StringPrintf(
 			szAudioComponent,
-			TEXT(" [%s/%s]"), szLang1, szLang2);
+			TEXT(" [%") T_PRIS TEXT("/%") T_PRIS TEXT("]"), szLang1, szLang2);
 	} else {
 		TCHAR szLang[LibISDB::MAX_LANGUAGE_TEXT_LENGTH];
 		LibISDB::GetLanguageText_ja(pAudioInfo->LanguageCode, szLang, lengthof(szLang));
 		StringPrintf(
 			szAudioComponent,
-			TEXT(" [%s]"), szLang);
+			TEXT(" [%") T_PRIS TEXT("]"), szLang);
 	}
 
 	StringPrintf(
-		pszText, MaxLength, TEXT("%s%s"),
+		pszText, MaxLength, TEXT("%") T_PRIS TEXT("%") T_PRIS,
 		pszAudio != nullptr ? pszAudio : TEXT("?"),
 		szAudioComponent);
 }

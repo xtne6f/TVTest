@@ -720,7 +720,7 @@ int CUICore::FormatCurrentAudioText(LPTSTR pszText, int MaxLength) const
 					AudioInfo.LanguageCode2,
 					szLang2, lengthof(szLang2),
 					LibISDB::LanguageTextType::Short);
-				Formatter.AppendFormat(TEXT("%s+%s"), szLang1, szLang2);
+				Formatter.AppendFormat(TEXT("%") T_PRIS TEXT("+%") T_PRIS, szLang1, szLang2);
 				break;
 			}
 		} else {
@@ -768,7 +768,7 @@ int CUICore::FormatCurrentAudioText(LPTSTR pszText, int MaxLength) const
 				Pos++;
 				if (Pos < AudioInfo.Text.length() && AudioInfo.Text[Pos] == TEXT('\n'))
 					Pos++;
-				StringPrintf(szBuf + Pos, lengthof(szBuf) - Pos, TEXT("/%s"), AudioInfo.Text.c_str() + Pos);
+				StringPrintf(szBuf + Pos, lengthof(szBuf) - Pos, TEXT("/%") T_PRIS, AudioInfo.Text.c_str() + Pos);
 				StringUtility::ToHalfWidthNoKatakana(
 					szBuf, szAudio, lengthof(szAudio));
 			} else {
@@ -802,7 +802,7 @@ int CUICore::FormatCurrentAudioText(LPTSTR pszText, int MaxLength) const
 				LibISDB::LanguageTextType::Simple);
 		}
 
-		Formatter.AppendFormat(TEXT("%s %s"), szFormat, szAudio);
+		Formatter.AppendFormat(TEXT("%") T_PRIS TEXT(" %") T_PRIS, szFormat, szAudio);
 	} else {
 		switch (NumChannels) {
 		case 1:
@@ -876,7 +876,7 @@ bool CUICore::GetSelectedAudioText(LPTSTR pszText, int MaxLength) const
 				StringCopy(pszText, szAudio2, MaxLength);
 				break;
 			case LibISDB::DirectShow::AudioDecoderFilter::DualMonoMode::Both:
-				StringPrintf(pszText, MaxLength, TEXT("%s+%s"), szAudio1, szAudio2);
+				StringPrintf(pszText, MaxLength, TEXT("%") T_PRIS TEXT("+%") T_PRIS, szAudio1, szAudio2);
 				break;
 			default:
 				return false;
@@ -886,7 +886,7 @@ bool CUICore::GetSelectedAudioText(LPTSTR pszText, int MaxLength) const
 			if (AudioInfo.Text.empty())
 				LibISDB::GetLanguageText_ja(AudioInfo.LanguageCode, szText, lengthof(szText));
 			StringPrintf(
-				pszText, MaxLength, TEXT("音声%d: %s"),
+				pszText, MaxLength, TEXT("音声%d: %") T_PRIS,
 				GetAudioStream() + 1,
 				AudioInfo.Text.empty() ? szText : AudioInfo.Text.c_str());
 		}
@@ -896,7 +896,7 @@ bool CUICore::GetSelectedAudioText(LPTSTR pszText, int MaxLength) const
 		if (GetNumAudioStreams() > 1)
 			Pos = StringPrintf(pszText, MaxLength, TEXT("音声%d: "), GetAudioStream() + 1);
 		StringPrintf(
-			pszText + Pos, MaxLength - Pos, TEXT("ステレオ%s"),
+			pszText + Pos, MaxLength - Pos, TEXT("ステレオ%") T_PRIS,
 			GetStereoMode() == LibISDB::DirectShow::AudioDecoderFilter::StereoMode::Left ? TEXT("左") : TEXT("右"));
 	} else {
 		StringPrintf(pszText, MaxLength, TEXT("音声%d"), GetAudioStream() + 1);
@@ -1255,7 +1255,7 @@ void CUICore::InitChannelMenu(HMENU hmenu)
 
 			if (pChInfo->IsEnabled()) {
 				StringPrintf(
-					szText, TEXT("%d: %s"),
+					szText, TEXT("%d: %") T_PRIS,
 					fControlKeyID ? pChInfo->GetChannelNo() : i + 1, pChInfo->GetName());
 				::AppendMenu(
 					hmenu,
@@ -2040,7 +2040,7 @@ bool CUICore::CTunerSelectMenu::Create(HWND hwnd)
 				TCHAR szTemp[lengthof(szText)];
 
 				StringPrintf(
-					szTemp, TEXT("%s [%s]"),
+					szTemp, TEXT("%") T_PRIS TEXT(" [%") T_PRIS TEXT("]"),
 					pDriverInfo->GetTunerName(),
 					szFileName);
 				CopyToMenuText(szTemp, szText, lengthof(szText));

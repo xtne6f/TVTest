@@ -98,9 +98,9 @@ void CChannelControlItem::Draw(HDC hdc, const RECT &Rect)
 		crBack = ::GetBkColor(hdc);
 		::SetTextColor(hdc, MixColor(crText, crBack, 128));
 		pInfo = ChannelManager.GetChangingChannelInfo();
-		StringPrintf(szText, TEXT("%d: %s"), pInfo->GetChannelNo(), pInfo->GetName());
+		StringPrintf(szText, TEXT("%d: %") T_PRIS, pInfo->GetChannelNo(), pInfo->GetName());
 	} else if ((pInfo = ChannelManager.GetCurrentChannelInfo()) != nullptr) {
-		StringPrintf(szText, TEXT("%d: %s"), pInfo->GetChannelNo(), pInfo->GetName());
+		StringPrintf(szText, TEXT("%d: %") T_PRIS, pInfo->GetChannelNo(), pInfo->GetName());
 	} else {
 		StringCopy(szText, TEXT("<チャンネル>"));
 	}

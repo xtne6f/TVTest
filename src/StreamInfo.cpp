@@ -152,7 +152,7 @@ static void FormatEsInfo(
 	LPCTSTR pszStreamType = LibISDB::GetStreamTypeText(Es.StreamType);
 	StringPrintf(
 		pszText, MaxText,
-		TEXT("%s%d : PID 0x%04x (%d) / stream type 0x%02x (%s) / component tag 0x%02x"),
+		TEXT("%") T_PRIS TEXT("%d : PID 0x%04x (%d) / stream type 0x%02x (%") T_PRIS TEXT(") / component tag 0x%02x"),
 		pszName, Index + 1,
 		Es.PID, Es.PID,
 		Es.StreamType,
@@ -175,7 +175,7 @@ void CStreamInfoPage::SetService()
 		Length = StringPrintf(szText, TEXT("TSID 0x%04x (%d)"), TSID, TSID);
 		String TSName;
 		if (pAnalyzer->GetTSName(&TSName)) {
-			StringPrintf(szText + Length, lengthof(szText) - Length, TEXT(" %s"), TSName.c_str());
+			StringPrintf(szText + Length, lengthof(szText) - Length, TEXT(" %") T_PRIS, TSName.c_str());
 		}
 	} else {
 		szText[0] = '\0';
@@ -187,7 +187,7 @@ void CStreamInfoPage::SetService()
 		Length = StringPrintf(szText, TEXT("NID 0x%04x (%d)"), NID, NID);
 		String Name;
 		if (pAnalyzer->GetNetworkName(&Name)) {
-			StringPrintf(szText + Length, lengthof(szText) - Length, TEXT(" %s"), Name.c_str());
+			StringPrintf(szText + Length, lengthof(szText) - Length, TEXT(" %") T_PRIS, Name.c_str());
 		}
 	} else {
 		szText[0] = '\0';
@@ -224,7 +224,7 @@ void CStreamInfoPage::SetService()
 			if (!ServiceInfo.ServiceName.empty())
 				Length += StringPrintf(
 					szText + Length, lengthof(szText) - Length,
-					TEXT(" (%s)"), ServiceInfo.ServiceName.c_str());
+					TEXT(" (%") T_PRIS TEXT(")"), ServiceInfo.ServiceName.c_str());
 			ServiceID = ServiceInfo.ServiceID;
 			Length += StringPrintf(
 				szText + Length, lengthof(szText) - Length,
@@ -325,7 +325,7 @@ void CStreamInfoPage::SetService()
 				tvis.item.state = 0;
 				tvis.item.cChildren = 0;
 				if (!ServiceInfo.ServiceName.empty())
-					Length = StringPrintf(szText, TEXT("%s"), ServiceInfo.ServiceName.c_str());
+					Length = StringPrintf(szText, TEXT("%") T_PRIS, ServiceInfo.ServiceName.c_str());
 				else
 					Length = StringPrintf(szText, TEXT("サービス%d"), i + 1);
 				StringPrintf(
@@ -415,7 +415,7 @@ void CStreamInfoPage::SetService()
 						const LibISDB::AnalyzerFilter::SDTServiceInfo &ServiceInfo = TsInfo.ServiceList[j];
 						StringPrintf(
 							szText,
-							TEXT("サービス%d (%s) : SID 0x%04x (%d) / Type 0x%02x / CA %d"),
+							TEXT("サービス%d (%") T_PRIS TEXT(") : SID 0x%04x (%d) / Type 0x%02x / CA %d"),
 							(int)j + 1,
 							ServiceInfo.ServiceName.c_str(),
 							ServiceInfo.ServiceID, ServiceInfo.ServiceID,
@@ -446,7 +446,7 @@ void CStreamInfoPage::SetService()
 
 				StringPrintf(
 					szText,
-					TEXT("TSID 0x%04x (%d) / エリア %s / ガードインターバル %s / 伝送モード %s"),
+					TEXT("TSID 0x%04x (%d) / エリア %") T_PRIS TEXT(" / ガードインターバル %") T_PRIS TEXT(" / 伝送モード %") T_PRIS,
 					Info.TransportStreamID,
 					Info.TransportStreamID,
 					pszArea != nullptr ? pszArea : TEXT("?"),

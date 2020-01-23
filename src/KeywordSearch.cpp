@@ -33,7 +33,7 @@ namespace TVTest
 
 bool CKeywordSearch::Load(LPCTSTR pszFileName)
 {
-	TRACE(TEXT("CKeywordSearch::Load() : \"%s\"\n"), pszFileName);
+	TRACE(TEXT("CKeywordSearch::Load() : \"%") T_PRIS TEXT("\"\n"), pszFileName);
 
 	if (IsStringEmpty(pszFileName))
 		return false;
@@ -130,7 +130,7 @@ bool CKeywordSearch::Search(int Index, LPCTSTR pszKeyword) const
 			}
 		}
 		if (!fFound) {
-			TRACE(TEXT("Unknown parameter : {%s}\n"), Param.c_str());
+			TRACE(TEXT("Unknown parameter : {%") T_PRIS TEXT("}\n"), Param.c_str());
 			return false;
 		}
 
@@ -143,7 +143,7 @@ bool CKeywordSearch::Search(int Index, LPCTSTR pszKeyword) const
 	if (Buffer.empty())
 		return false;
 
-	TRACE(TEXT("Search by %s : \"%s\"\n"), pEngine->Name.c_str(), Buffer.c_str());
+	TRACE(TEXT("Search by %") T_PRIS TEXT(" : \"%") T_PRIS TEXT("\"\n"), pEngine->Name.c_str(), Buffer.c_str());
 
 	::ShellExecute(nullptr, TEXT("open"), Buffer.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 
@@ -161,7 +161,7 @@ int CKeywordSearch::InitializeMenu(HMENU hmenu, int Command, int MaxItems) const
 		TCHAR szText[256], szMenu[256];
 
 		StringPrintf(
-			szText, TEXT("%s で検索"),
+			szText, TEXT("%") T_PRIS TEXT(" で検索"),
 			m_SearchEngineList[i].Name.c_str());
 		CopyToMenuText(szText, szMenu, lengthof(szMenu));
 		::AppendMenu(hmenu, MF_STRING | MF_ENABLED, Command + i, szMenu);

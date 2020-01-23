@@ -28,6 +28,10 @@
 #include "LibISDB/LibISDB/Utilities/StringUtilities.hpp"
 
 
+#define TVTEST_PRIS LIBISDB_PRIS
+#define T_PRIS TEXT(TVTEST_PRIS)
+
+
 namespace TVTest
 {
 

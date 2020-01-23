@@ -647,7 +647,7 @@ CCoreEngine::StatusFlag CCoreEngine::UpdateAsyncStatus()
 		if (fSPDIFPassthrough != m_fSPDIFPassthrough) {
 			m_fSPDIFPassthrough = fSPDIFPassthrough;
 			Updated |= StatusFlag::SPDIFPassthrough;
-			TRACE(TEXT("S/PDIF passthrough %s\n"), fSPDIFPassthrough ? TEXT("ON") : TEXT("OFF"));
+			TRACE(TEXT("S/PDIF passthrough %") T_PRIS TEXT("\n"), fSPDIFPassthrough ? TEXT("ON") : TEXT("OFF"));
 		}
 	}
 

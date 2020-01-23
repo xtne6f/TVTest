@@ -146,7 +146,7 @@ void CProgramItemInfo::GetEventTitleText(LPTSTR pszText, int MaxLength) const
 
 	GetEventTimeText(szTime, lengthof(szTime));
 	StringPrintf(
-		pszText, MaxLength, TEXT("%s %s"),
+		pszText, MaxLength, TEXT("%") T_PRIS TEXT(" %") T_PRIS,
 		szTime, m_EventInfo.EventName.c_str());
 }
 
@@ -1082,7 +1082,7 @@ LRESULT CProgramListPanel::OnMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM
 					}
 					StringPrintf(
 						szText,
-						TEXT("%d/%d(%s) %d:%02d%s\n%s\n\n%s%s%s%s"),
+						TEXT("%d/%d(%") T_PRIS TEXT(") %d:%02d%") T_PRIS TEXT("\n%") T_PRIS TEXT("\n\n%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS,
 						EventInfo.m_StartTime.wMonth,
 						EventInfo.m_StartTime.wDay,
 						GetDayOfWeekText(EventInfo.m_StartTime.wDayOfWeek),

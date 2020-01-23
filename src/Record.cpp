@@ -199,7 +199,7 @@ bool CRecordTask::Start(LPCTSTR pszFileName, const CRecordingSettings &Settings)
 				} else {
 					GetAppClass().AddLog(
 						CLogItem::LogType::Warning,
-						TEXT("出力プラグイン \"%s\" がロードできないため、TS出力を行います。"),
+						TEXT("出力プラグイン \"%") T_PRIS TEXT("\" がロードできないため、TS出力を行います。"),
 						WritePlugin.c_str());
 					delete pPluginWriter;
 				}
@@ -1281,7 +1281,7 @@ INT_PTR CRecordManager::CRecordSettingsDialog::DlgProc(HWND hDlg, UINT uMsg, WPA
 						CAppMain::CreateDirectoryResult CreateDirResult =
 							GetAppClass().CreateDirectory(
 								hDlg, Dir.c_str(),
-								TEXT("録画ファイルの保存先フォルダ \"%s\" がありません。\n")
+								TEXT("録画ファイルの保存先フォルダ \"%") T_PRIS TEXT("\" がありません。\n")
 								TEXT("作成しますか?"));
 						if (CreateDirResult == CAppMain::CreateDirectoryResult::Error) {
 							SetDlgItemFocus(hDlg, IDC_RECORD_FILENAME);

@@ -583,7 +583,7 @@ INT_PTR CProgramGuideOptions::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARA
 						TCHAR szCommand[512];
 
 						StringPrintf(
-							szCommand, TEXT("%s:%s"),
+							szCommand, TEXT("%") T_PRIS TEXT(":%") T_PRIS,
 							::PathFindFileName(pPlugin->GetFileName()),
 							CommandInfo.pszText);
 						LRESULT Index = DlgComboBox_AddString(

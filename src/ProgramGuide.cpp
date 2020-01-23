@@ -214,7 +214,7 @@ int CEventItem::GetTitleText(LPTSTR pszText, int MaxLength) const
 		else
 			pEventName = &m_pEventInfo->EventName;
 		if (!pEventName->empty())
-			Length += StringPrintf(pszText + Length, MaxLength - Length, TEXT(" %s"), pEventName->c_str());
+			Length += StringPrintf(pszText + Length, MaxLength - Length, TEXT(" %") T_PRIS, pEventName->c_str());
 	}
 	return Length;
 }
@@ -1808,7 +1808,7 @@ void CProgramGuide::DrawDayHeader(int Day, HDC hdc, const RECT &Rect, Theme::CTh
 	COLORREF OldTextColor = ::SetTextColor(hdc, m_Theme.ColorList[COLOR_CHANNELNAMETEXT]);
 	TCHAR szText[64];
 	StringPrintf(
-		szText, TEXT("%d/%d(%s)"),
+		szText, TEXT("%d/%d(%") T_PRIS TEXT(")"),
 		Time.Month, Time.Day, GetDayOfWeekText(Time.DayOfWeek));
 	RECT rc = Rect;
 	rc.left += m_Style.HeaderPadding.Left;
@@ -1888,7 +1888,7 @@ void CProgramGuide::DrawTimeBar(HDC hdc, const RECT &Rect, Theme::CThemeDraw &Th
 		TCHAR szText[64];
 		if (m_ListMode == ListMode::Services && (i == 0 || DispTime.Hour % 3 == 0)) {
 			StringPrintf(
-				szText, lengthof(szText), TEXT("%d/%d(%s) %d時"),
+				szText, lengthof(szText), TEXT("%d/%d(%") T_PRIS TEXT(") %d時"),
 				DispTime.Month, DispTime.Day,
 				GetDayOfWeekText(DispTime.DayOfWeek),
 				DispTime.Hour);
@@ -2509,7 +2509,7 @@ void CProgramGuide::SetCaption()
 					Info.EndTime.OffsetHours(-1);
 					StringPrintf(
 						szText,
-						TITLE_TEXT TEXT(" - %s%s%d/%d(%s) %d時 ～ %d/%d(%s) %d時"),
+						TITLE_TEXT TEXT(" - %") T_PRIS TEXT("%") T_PRIS TEXT("%d/%d(%") T_PRIS TEXT(") %d時 ～ %d/%d(%") T_PRIS TEXT(") %d時"),
 						Info.pszRelativeDayText != nullptr ? Info.pszRelativeDayText : TEXT(""),
 						Info.pszRelativeDayText != nullptr ? TEXT(" ") : TEXT(""),
 						Info.BeginningTime.Month,
@@ -2525,7 +2525,7 @@ void CProgramGuide::SetCaption()
 					Last.OffsetDays(6);
 					StringPrintf(
 						szText,
-						TITLE_TEXT TEXT(" - %s %d/%d(%s) ～ %d/%d(%s)"),
+						TITLE_TEXT TEXT(" - %") T_PRIS TEXT(" %d/%d(%") T_PRIS TEXT(") ～ %d/%d(%") T_PRIS TEXT(")"),
 						m_ServiceList.GetItem(m_WeekListService)->GetServiceName(),
 						Info.BeginningTime.Month,
 						Info.BeginningTime.Day,
@@ -4492,7 +4492,7 @@ void CProgramGuide::ShowPopupMenu(int x, int y)
 		::GetMenuItemInfo(hmenu, i, FALSE, &mii);
 		int Length = ::lstrlen(szText);
 		StringPrintf(
-			szText + Length, lengthof(szText) - Length, TEXT(" %d/%d(%s) %d時～"),
+			szText + Length, lengthof(szText) - Length, TEXT(" %d/%d(%") T_PRIS TEXT(") %d時～"),
 			Time.Month, Time.Day, GetDayOfWeekText(Time.DayOfWeek), Time.Hour);
 		::SetMenuItemInfo(hmenu, i, FALSE, &mii);
 	}
@@ -5324,7 +5324,7 @@ public:
 			m_pProgramGuide->GetCurrentDateInfo(&Info);
 			EpgUtil::EpgTimeToDisplayTime(&Info.BeginningTime);
 			StringPrintf(
-				szText, TEXT("%s%s%d/%d(%s) %d時～"),
+				szText, TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%d/%d(%") T_PRIS TEXT(") %d時～"),
 				Info.pszRelativeDayText != nullptr ? Info.pszRelativeDayText : TEXT(""),
 				Info.pszRelativeDayText != nullptr ? TEXT(" ") : TEXT(""),
 				Info.BeginningTime.Month, Info.BeginningTime.Day,
@@ -5353,7 +5353,7 @@ public:
 					m_pProgramGuide->GetDateInfo(i, &Info);
 					EpgUtil::EpgTimeToDisplayTime(&Info.BeginningTime);
 					StringPrintf(
-						szText, TEXT("%s%s%d/%d(%s) %d時～"),
+						szText, TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%d/%d(%") T_PRIS TEXT(") %d時～"),
 						Info.pszRelativeDayText != nullptr ? Info.pszRelativeDayText : TEXT(""),
 						Info.pszRelativeDayText != nullptr ? TEXT(" ") : TEXT(""),
 						Info.BeginningTime.Month,
@@ -6200,7 +6200,7 @@ bool CDateToolbar::SetButtons(const LibISDB::DateTime *pDateList, int Days, int 
 		tbb.idCommand = FirstCommand + i;
 		StringPrintf(
 			szText, lengthof(szText),
-			TEXT("%d/%d(%s)"),
+			TEXT("%d/%d(%") T_PRIS TEXT(")"),
 			Date.Month, Date.Day, GetDayOfWeekText(Date.DayOfWeek));
 		tbb.iString = reinterpret_cast<INT_PTR>(szText);
 		tbb.dwData = ((DWORD)Date.Month << 16) | ((DWORD)Date.Day << 8) | Date.DayOfWeek;
@@ -6219,7 +6219,7 @@ bool CDateToolbar::SetButtons(const LibISDB::DateTime *pDateList, int Days, int 
 		TCHAR szText[32];
 		StringPrintf(
 			szText, lengthof(szText),
-			TEXT("%02d/%02d(%s)"),	// %02d にしているのは幅を揃えるため
+			TEXT("%02d/%02d(%") T_PRIS TEXT(")"),	// %02d にしているのは幅を揃えるため
 			Date.Month, Date.Day, GetDayOfWeekText(Date.DayOfWeek));
 		RECT rc = {0, 0, 0, 0};
 		::DrawText(hdc, szText, -1, &rc, DT_SINGLELINE | DT_NOPREFIX | DT_CALCRECT);
@@ -6276,7 +6276,7 @@ void CDateToolbar::OnCustomDraw(NMTBCUSTOMDRAW *pnmtb, HDC hdc)
 		StringCopy(szText, TEXT("今日"));
 	} else {
 		StringPrintf(
-			szText, TEXT("%d/%d(%s)"),
+			szText, TEXT("%d/%d(%") T_PRIS TEXT(")"),
 			(int)(pnmtb->nmcd.lItemlParam >> 16),
 			(int)((pnmtb->nmcd.lItemlParam >> 8) & 0xFF),
 			GetDayOfWeekText(DayOfWeek));
