@@ -212,7 +212,7 @@ bool CLogger::AddLogRaw(CLogItem::LogType Type, LPCTSTR pszText)
 
 	CLogItem *pLogItem = new CLogItem(Type, pszText, m_SerialNumber++);
 	m_LogList.emplace_back(pLogItem);
-	TRACE(TEXT("Log : %s\n"), pszText);
+	TRACE(TEXT("Log : %") T_PRIS TEXT("\n"), pszText);
 
 	if (m_fOutputToFile && !m_DefaultLogFileName.empty()) {
 		HANDLE hFile;
@@ -483,7 +483,7 @@ INT_PTR CLogger::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 					StringPrintf(
 						szMessage,
-						TEXT("ログを \"%s\" に保存しました。"), m_DefaultLogFileName.c_str());
+						TEXT("ログを \"%") T_PRIS TEXT("\" に保存しました。"), m_DefaultLogFileName.c_str());
 					::MessageBox(hDlg, szMessage, TEXT("ログ保存"), MB_OK | MB_ICONINFORMATION);
 				}
 			}

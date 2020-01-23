@@ -298,7 +298,7 @@ void CAccelerator::FormatAccelText(LPTSTR pszText, size_t MaxText, int Key, int 
 
 	StringPrintf(
 		pszText, MaxText,
-		TEXT("%s%s%s%s%s"),
+		TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS,
 		((Modifiers & MOD_SHIFT  ) != 0) ? TEXT("Shift+") : TEXT(""),
 		((Modifiers & MOD_CONTROL) != 0) ? TEXT("Ctrl+")  : TEXT(""),
 		((Modifiers & MOD_ALT    ) != 0) ? TEXT("Alt+")   : TEXT(""),
@@ -891,7 +891,7 @@ INT_PTR CAccelerator::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 						m_ListView.GetItemText(i, 0, szCommand, lengthof(szCommand));
 						StringPrintf(
 							szText,
-							TEXT("既に [%s] に割り当てられています。\n割り当て直しますか?"),
+							TEXT("既に [%") T_PRIS TEXT("] に割り当てられています。\n割り当て直しますか?"),
 							szCommand);
 						if (::MessageBox(hDlg, szText, TEXT("確認"), MB_YESNO | MB_ICONQUESTION) != IDYES)
 							return TRUE;
@@ -936,7 +936,7 @@ INT_PTR CAccelerator::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 						m_ListView.GetItemText(i, 0, szCommand, lengthof(szCommand));
 						StringPrintf(
 							szText,
-							TEXT("既に [%s] に割り当てられています。\n割り当て直しますか?"),
+							TEXT("既に [%") T_PRIS TEXT("] に割り当てられています。\n割り当て直しますか?"),
 							szCommand);
 						if (::MessageBox(hDlg, szText, TEXT("確認"), MB_YESNO | MB_ICONQUESTION) != IDYES)
 							return TRUE;

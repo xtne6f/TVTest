@@ -75,7 +75,7 @@ void SetFontInfoItem(HWND hDlg, int ID, const Style::Font &Font)
 		::ReleaseDC(hDlg, hdc);
 	}
 	StringPrintf(
-		szText, TEXT("%s, %d pt"),
+		szText, TEXT("%") T_PRIS TEXT(", %d pt"),
 		Font.LogFont.lfFaceName, Size);
 	SetDlgItemText(hDlg, ID, szText);
 }

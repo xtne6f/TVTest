@@ -595,9 +595,9 @@ void CCommandLineOptions::Parse(LPCWSTR pszCmdLine)
 				}
 #ifdef _DEBUG
 				else {
-					TRACE(TEXT("Unknown command line option %s\n"), Args.GetText());
+					TRACE(TEXT("Unknown command line option %") T_PRIS TEXT("\n"), Args.GetText());
 					// プラグインで解釈するオプションもあるので…
-					//GetAppClass().AddLong(TEXT("不明なコマンドラインオプション %s を無視します。"), Args.GetText());
+					//GetAppClass().AddLong(TEXT("不明なコマンドラインオプション %") T_PRIS TEXT(" を無視します。"), Args.GetText());
 				}
 #endif
 			}
@@ -622,11 +622,11 @@ void CCommandLineOptions::Parse(LPCWSTR pszCmdLine)
 				SYSTEMTIME Time;
 				if (Args.GetDurationOption(L"d", &Duration)) {
 					TRACE(
-						L"Commandline parse test : \"%s\" %d\n",
+						L"Commandline parse test : \"%ls\" %d\n",
 						Args.GetText(), Duration);
 				} else if (Args.GetOption(L"t", &Time)) {
 					TRACE(
-						L"Commandline parse test : \"%s\" %d/%d/%d %d:%d:%d\n",
+						L"Commandline parse test : \"%ls\" %d/%d/%d %d:%d:%d\n",
 						Args.GetText(),
 						Time.wYear, Time.wMonth, Time.wDay, Time.wHour, Time.wMinute, Time.wSecond);
 				}

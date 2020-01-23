@@ -363,7 +363,7 @@ void CAppCommand::RegisterDynamicCommands()
 		LPCTSTR pszFileName = ::PathFindFileName(pDriverInfo->GetFileName());
 		TCHAR szText[CCommandManager::MAX_COMMAND_TEXT];
 
-		StringPrintf(szText, TEXT("BonDriver切替 : %s"), pszFileName);
+		StringPrintf(szText, TEXT("BonDriver切替 : %") T_PRIS, pszFileName);
 		m_App.CommandManager.RegisterCommand(
 			CM_DRIVER_FIRST + i, pszFileName,
 			CCommandManager::BindHandler(&CAppCommand::SelectDriver, this),
@@ -377,12 +377,12 @@ void CAppCommand::RegisterDynamicCommands()
 
 		StringPrintf(
 			szText,
-			TEXT("プラグイン有効/無効 : %s"), pPlugin->GetPluginName());
+			TEXT("プラグイン有効/無効 : %") T_PRIS, pPlugin->GetPluginName());
 		/*
 		TCHAR szShortText[CCommandManager::MAX_COMMAND_TEXT];
 		StringPrintf(
 			szShortText,
-			TEXT("%s 有効/無効"), pPlugin->GetPluginName());
+			TEXT("%") T_PRIS TEXT(" 有効/無効"), pPlugin->GetPluginName());
 		*/
 		m_App.CommandManager.RegisterCommand(
 			CM_PLUGIN_FIRST + i,
@@ -414,7 +414,7 @@ void CAppCommand::RegisterDynamicCommands()
 
 			TCHAR szText[CCommandManager::MAX_COMMAND_TEXT];
 			StringPrintf(
-				szText, TEXT("%s : %s"),
+				szText, TEXT("%") T_PRIS TEXT(" : %") T_PRIS,
 				pPlugin->GetPluginName(), pInfo->GetName());
 
 			CCommandManager::CommandState State = CCommandManager::CommandState::None;
@@ -1242,7 +1242,7 @@ bool CAppCommand::UpdateChannelList(CCommandManager::InvokeParameters &Params)
 		if (m_App.ChannelScan.AutoUpdateChannelList(&TuningSpaceList, &MessageList)) {
 			m_App.AddLog(TEXT("チャンネルリストの自動更新を行いました。"));
 			for (const String &e : MessageList)
-				m_App.AddLog(TEXT("%s"), e.c_str());
+				m_App.AddLog(TEXT("%") T_PRIS, e.c_str());
 
 			TuningSpaceList.MakeAllChannelList();
 			m_App.Core.UpdateCurrentChannelList(&TuningSpaceList);
@@ -1255,9 +1255,9 @@ bool CAppCommand::UpdateChannelList(CCommandManager::InvokeParameters &Params)
 				::PathRenameExtension(szFileName, CHANNEL_FILE_EXTENSION);
 			}
 			if (TuningSpaceList.SaveToFile(szFileName))
-				m_App.AddLog(TEXT("チャンネルファイルを \"%s\" に保存しました。"), szFileName);
+				m_App.AddLog(TEXT("チャンネルファイルを \"%") T_PRIS TEXT("\" に保存しました。"), szFileName);
 			else
-				m_App.AddLog(CLogItem::LogType::Error, TEXT("チャンネルファイル \"%s\" を保存できません。"), szFileName);
+				m_App.AddLog(CLogItem::LogType::Error, TEXT("チャンネルファイル \"%") T_PRIS TEXT("\" を保存できません。"), szFileName);
 		}
 	}
 

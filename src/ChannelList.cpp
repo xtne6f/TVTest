@@ -863,7 +863,7 @@ static const UINT CP_SHIFT_JIS = 932;
 
 bool CTuningSpaceList::SaveToFile(LPCTSTR pszFileName) const
 {
-	TRACE(TEXT("CTuningSpaceList::SaveToFile() : \"%s\"\n"), pszFileName);
+	TRACE(TEXT("CTuningSpaceList::SaveToFile() : \"%") T_PRIS TEXT("\"\n"), pszFileName);
 
 	String Buffer;
 
@@ -879,7 +879,7 @@ bool CTuningSpaceList::SaveToFile(LPCTSTR pszFileName) const
 			continue;
 
 		if (GetTuningSpaceName(i) != nullptr) {
-			StringPrintf(szText, TEXT(";#SPACE(%d,%s)\r\n"), i, GetTuningSpaceName(i));
+			StringPrintf(szText, TEXT(";#SPACE(%d,%") T_PRIS TEXT(")\r\n"), i, GetTuningSpaceName(i));
 			Buffer += szText;
 		}
 
@@ -919,7 +919,7 @@ bool CTuningSpaceList::SaveToFile(LPCTSTR pszFileName) const
 
 			StringPrintf(
 				szText,
-				TEXT("%s,%d,%d,%d,"),
+				TEXT("%") T_PRIS TEXT(",%d,%d,%d,"),
 				Name.empty() ? pszName : Name.c_str(),
 				pChInfo->GetSpace(),
 				pChInfo->GetChannelIndex(),
@@ -1046,7 +1046,7 @@ static int ParseDigits(LPTSTR *ppText)
 
 bool CTuningSpaceList::LoadFromFile(LPCTSTR pszFileName)
 {
-	TRACE(TEXT("CTuningSpaceList::LoadFromFile() : \"%s\"\n"), pszFileName);
+	TRACE(TEXT("CTuningSpaceList::LoadFromFile() : \"%") T_PRIS TEXT("\"\n"), pszFileName);
 
 	static const LONGLONG MAX_FILE_SIZE = 8LL * 1024 * 1024;
 

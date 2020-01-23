@@ -85,7 +85,7 @@ static int FormatPanAndScanInfo(const CCoreEngine::PanAndScanInfo &Info, LPTSTR 
 	FormatValue(Info.Width, FACTOR_PERCENTAGE, szWidth, lengthof(szWidth));
 	FormatValue(Info.Height, FACTOR_PERCENTAGE, szHeight, lengthof(szHeight));
 	return StringPrintf(
-		pszText, MaxLength, TEXT("%s,%s,%s,%s,%d,%d"),
+		pszText, MaxLength, TEXT("%") T_PRIS TEXT(",%") T_PRIS TEXT(",%") T_PRIS TEXT(",%") T_PRIS TEXT(",%d,%d"),
 		szXPos, szYPos, szWidth, szHeight, Info.XAspect, Info.YAspect);
 }
 
@@ -268,7 +268,7 @@ static void FormatInfo(const CPanAndScanOptions::PanAndScanInfo *pInfo, LPTSTR p
 	FormatValue(pInfo->Info.Width, FACTOR_PERCENTAGE, szWidth, lengthof(szWidth));
 	FormatValue(pInfo->Info.Height, FACTOR_PERCENTAGE, szHeight, lengthof(szHeight));
 	StringPrintf(
-		pszText, MaxLength, TEXT("%s , %s / %s x %s / %d : %d"),
+		pszText, MaxLength, TEXT("%") T_PRIS TEXT(" , %") T_PRIS TEXT(" / %") T_PRIS TEXT(" x %") T_PRIS TEXT(" / %d : %d"),
 		szXPos, szYPos, szWidth, szHeight, pInfo->Info.XAspect, pInfo->Info.YAspect);
 }
 
@@ -809,7 +809,7 @@ bool CPanAndScanOptions::Export(LPCTSTR pszFileName) const
 		FormatPanAndScanInfo(pInfo->Info, szSettings, lengthof(szSettings));
 		int Length = StringPrintf(
 			szBuffer,
-			TEXT("Preset%d.Name=%s\r\nPreset%d=%s\r\n"),
+			TEXT("Preset%d.Name=%") T_PRIS TEXT("\r\nPreset%d=%") T_PRIS TEXT("\r\n"),
 			i, pInfo->szName, i, szSettings);
 		::WriteFile(hFile, szBuffer, Length * sizeof(TCHAR), &Write, nullptr);
 	}
@@ -829,7 +829,7 @@ bool CPanAndScanOptions::GetCommandText(int Command, LPTSTR pszText, size_t MaxL
 	if ((size_t)Index < m_PresetList.size()) {
 		StringPrintf(
 			pszText + Length, MaxLength - Length,
-			TEXT(" : %s"), m_PresetList[Index].szName);
+			TEXT(" : %") T_PRIS, m_PresetList[Index].szName);
 	}
 	return true;
 }

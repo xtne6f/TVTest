@@ -202,7 +202,7 @@ void CChannelListCategoryBase::Draw(
 				if (!pEventInfo->EventName.empty()) {
 					Length += StringPrintf(
 						szText + Length, lengthof(szText) - Length,
-						TEXT("%s%s"),
+						TEXT("%") T_PRIS TEXT("%") T_PRIS,
 						Length > 0 ? TEXT(" ") : TEXT(""),
 						pEventInfo->EventName.c_str());
 				}

@@ -204,7 +204,7 @@ bool CProgramGuideTool::Execute(
 		}
 	}
 
-	TRACE(TEXT("外部ツール実行 : %s, %s\n"), szFileName, Parameter.c_str());
+	TRACE(TEXT("外部ツール実行 : %") T_PRIS TEXT(", %") T_PRIS TEXT("\n"), szFileName, Parameter.c_str());
 
 	return ::ShellExecute(nullptr, nullptr, szFileName, Parameter.c_str(), nullptr, SW_SHOWNORMAL) >= (HINSTANCE)32;
 }

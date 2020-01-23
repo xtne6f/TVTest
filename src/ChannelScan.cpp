@@ -415,7 +415,7 @@ bool CChannelScan::AutoUpdateChannelList(CTuningSpaceList *pTuningSpaceList, std
 							if (pMessageList != nullptr) {
 								StringUtility::Format(
 									Message,
-									TEXT("新しいサービス %d \"%s\" (NID %d TSID 0x%04x) を追加しました。"),
+									TEXT("新しいサービス %d \"%") T_PRIS TEXT("\" (NID %d TSID 0x%04x) を追加しました。"),
 									ChannelInfo.GetServiceID(),
 									ChannelInfo.GetName(),
 									ChannelInfo.GetNetworkID(),
@@ -433,7 +433,7 @@ bool CChannelScan::AutoUpdateChannelList(CTuningSpaceList *pTuningSpaceList, std
 				if (!fInserted && pMessageList != nullptr) {
 					StringUtility::Format(
 						Message,
-						TEXT("新しいサービス %d \"%s\" (NID %d TSID 0x%04x) が検出されましたが、当該 TS が見付かりません。"),
+						TEXT("新しいサービス %d \"%") T_PRIS TEXT("\" (NID %d TSID 0x%04x) が検出されましたが、当該 TS が見付かりません。"),
 						ServiceInfo.ServiceID,
 						ServiceInfo.ServiceName.c_str(),
 						TsInfo.OriginalNetworkID,
@@ -488,7 +488,7 @@ bool CChannelScan::AutoUpdateChannelList(CTuningSpaceList *pTuningSpaceList, std
 										if (pMessageList != nullptr) {
 											StringUtility::Format(
 												Message,
-												TEXT("サービス %d \"%s\" が TS 0x%04x から 0x%04x に移動しました。"),
+												TEXT("サービス %d \"%") T_PRIS TEXT("\" が TS 0x%04x から 0x%04x に移動しました。"),
 												ChannelInfo.GetServiceID(),
 												ChannelInfo.GetName(),
 												pChannelInfo->GetTransportStreamID(),
@@ -502,7 +502,7 @@ bool CChannelScan::AutoUpdateChannelList(CTuningSpaceList *pTuningSpaceList, std
 										if (pMessageList != nullptr) {
 											StringUtility::Format(
 												Message,
-												TEXT("サービス %d \"%s\" の TS 0x%04x から 0x%04x への移動を検出しましたが、移動先 TS が見付かりません。"),
+												TEXT("サービス %d \"%") T_PRIS TEXT("\" の TS 0x%04x から 0x%04x への移動を検出しましたが、移動先 TS が見付かりません。"),
 												ServiceInfo.ServiceID,
 												pChannelInfo->GetName(),
 												pChannelInfo->GetTransportStreamID(),
@@ -526,7 +526,7 @@ bool CChannelScan::AutoUpdateChannelList(CTuningSpaceList *pTuningSpaceList, std
 					if (!fServiceMoved && pMessageList != nullptr) {
 						StringUtility::Format(
 							Message,
-							TEXT("サービス %d \"%s\" は削除されました。"),
+							TEXT("サービス %d \"%") T_PRIS TEXT("\" は削除されました。"),
 							pChannelInfo->GetServiceID(),
 							pChannelInfo->GetName());
 						pMessageList->push_back(Message);
@@ -948,14 +948,14 @@ INT_PTR CChannelScan::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 								CStaticStringFormatter Formatter(szMessage, lengthof(szMessage));
 
 								Formatter.AppendFormat(
-									TEXT("元あったチャンネルのうち、以下の%d%sのチャンネルが検出されませんでした。\n\n"),
+									TEXT("元あったチャンネルのうち、以下の%d%") T_PRIS TEXT("のチャンネルが検出されませんでした。\n\n"),
 									Channels, Channels < 10 ? TEXT("つ") : TEXT(""));
 								for (int i = 0; i < Channels; i++) {
 									if (i == 10) {
 										Formatter.Append(TEXT("...\n"));
 										break;
 									}
-									Formatter.AppendFormat(TEXT("・%s\n"), MissingChannels[i]->GetName());
+									Formatter.AppendFormat(TEXT("・%") T_PRIS TEXT("\n"), MissingChannels[i]->GetName());
 								}
 								Formatter.Append(TEXT("\n検出されなかったチャンネルを残しますか？"));
 								if (::MessageBox(
@@ -1177,13 +1177,13 @@ INT_PTR CChannelScan::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 					}
 					bool fOK = m_TuningSpaceList.SaveToFile(szFileName);
 					if (fOK) {
-						App.AddLog(TEXT("チャンネルファイルを \"%s\" に保存しました。"), szFileName);
+						App.AddLog(TEXT("チャンネルファイルを \"%") T_PRIS TEXT("\" に保存しました。"), szFileName);
 					} else {
 						TCHAR szText[32 + MAX_PATH];
 						StringPrintf(
 							szText,
-							TEXT("チャンネルファイル \"%s\" を保存できません。"), szFileName);
-						App.AddLog(CLogItem::LogType::Error, TEXT("%s"), szText);
+							TEXT("チャンネルファイル \"%") T_PRIS TEXT("\" を保存できません。"), szFileName);
+						App.AddLog(CLogItem::LogType::Error, TEXT("%") T_PRIS, szText);
 						::MessageBox(hDlg, szText, nullptr, MB_OK | MB_ICONEXCLAMATION);
 					}
 					SetUpdateFlag(UPDATE_CHANNELLIST);
@@ -1204,11 +1204,11 @@ INT_PTR CChannelScan::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 								CStaticStringFormatter Formatter(szText, lengthof(szText));
 
 								*pSequence = _T('0');
-								Formatter.AppendFormat(TEXT("%s のチャンネルスキャン結果を\n以下の BonDriver にも反映させますか？\n\n"), pszName);
+								Formatter.AppendFormat(TEXT("%") T_PRIS TEXT(" のチャンネルスキャン結果を\n以下の BonDriver にも反映させますか？\n\n"), pszName);
 								for (int i = 1; i <= 9; i++) {
 									if ((Exists & (1U << i)) != 0) {
 										*pSequence = _T('0') + i;
-										Formatter.AppendFormat(TEXT("・%s\n"), pszName);
+										Formatter.AppendFormat(TEXT("・%") T_PRIS TEXT("\n"), pszName);
 									}
 								}
 								if (::MessageBox(hDlg, Formatter.GetString(), TEXT("チャンネルスキャン"), MB_YESNO | MB_ICONQUESTION) == IDYES) {
@@ -1217,14 +1217,14 @@ INT_PTR CChannelScan::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 											::PathRenameExtension(szFileName, CHANNEL_FILE_EXTENSION);
 											*pSequence = _T('0') + i;
 											if (m_TuningSpaceList.SaveToFile(szFileName)) {
-												App.AddLog(TEXT("チャンネルファイルを \"%s\" に保存しました。"), szFileName);
+												App.AddLog(TEXT("チャンネルファイルを \"%") T_PRIS TEXT("\" に保存しました。"), szFileName);
 												::PathRenameExtension(szFileName, TEXT(".dll"));
 												App.Core.UpdateChannelList(szFileName, &m_TuningSpaceList);
 											} else {
 												StringPrintf(
 													szText,
-													TEXT("チャンネルファイル \"%s\" を保存できません。"), szFileName);
-												App.AddLog(CLogItem::LogType::Error, TEXT("%s"), szText);
+													TEXT("チャンネルファイル \"%") T_PRIS TEXT("\" を保存できません。"), szFileName);
+												App.AddLog(CLogItem::LogType::Error, TEXT("%") T_PRIS, szText);
 												if (::MessageBox(hDlg, szText, nullptr, MB_OKCANCEL | MB_ICONEXCLAMATION) != IDOK)
 													break;
 											}
@@ -1362,7 +1362,7 @@ INT_PTR CChannelScan::ScanDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 
 			CoreEngine.GetSignalLevelText(szSignalLevel, lengthof(szSignalLevel));
 			CoreEngine.GetBitRateText(szBitRate, lengthof(szBitRate));
-			StringPrintf(szText, TEXT("%s / %s"), szSignalLevel, szBitRate);
+			StringPrintf(szText, TEXT("%") T_PRIS TEXT(" / %") T_PRIS, szSignalLevel, szBitRate);
 			::SetDlgItemText(hDlg, IDC_CHANNELSCAN_LEVEL, szText);
 		}
 		return TRUE;
@@ -1718,7 +1718,7 @@ void CChannelScan::Scan()
 						pChInfo->Enable(false);
 
 					TRACE(
-						TEXT("Channel found [%2d][%2d] : %s NID 0x%04x TSID 0x%04x SID 0x%04x\n"),
+						TEXT("Channel found [%2d][%2d] : %") T_PRIS TEXT(" NID 0x%04x TSID 0x%04x SID 0x%04x\n"),
 						m_ScanChannel, (int)i, Name.c_str(),
 						NetworkID, TransportStreamID, ServiceID);
 
@@ -1752,7 +1752,7 @@ void CChannelScan::Scan()
 				}
 
 				TRACE(
-					TEXT("Channel found [%2d] : %s NID 0x%04x TSID 0x%04x SID 0x%04x\n"),
+					TEXT("Channel found [%2d] : %") T_PRIS TEXT(" NID 0x%04x TSID 0x%04x SID 0x%04x\n"),
 					m_ScanChannel, Name.c_str(), TransportStreamID, NetworkID, pChInfo->GetServiceID());
 
 				m_ScanningChannelList.AddChannel(pChInfo);

@@ -56,12 +56,12 @@ void CChannelStatusItem::Draw(HDC hdc, const RECT &ItemRect, const RECT &DrawRec
 		::SetTextColor(hdc, MixColor(crText, crBack, 128));
 		pInfo = ChannelManager.GetChangingChannelInfo();
 		StringPrintf(
-			szText, TEXT("%d: %s"),
+			szText, TEXT("%d: %") T_PRIS,
 			pInfo->GetChannelNo(), pInfo->GetName());
 	} else if ((pInfo = ChannelManager.GetCurrentChannelInfo()) != nullptr) {
 		TCHAR szService[MAX_CHANNEL_NAME];
 		StringPrintf(
-			szText, TEXT("%d: %s"),
+			szText, TEXT("%d: %") T_PRIS,
 			pInfo->GetChannelNo(),
 			App.Core.GetCurrentServiceName(szService, lengthof(szService)) ? szService : pInfo->GetName());
 	} else {
@@ -411,7 +411,7 @@ void CRecordStatusItem::Draw(HDC hdc, const RECT &ItemRect, const RECT &DrawRect
 			RecordSec = (int)(RecordManager.GetRecordTime() / 1000);
 		}
 		StringPrintf(
-			szText, TEXT("%s%d:%02d:%02d"),
+			szText, TEXT("%") T_PRIS TEXT("%d:%02d:%02d"),
 			fRemain ? TEXT("-") : TEXT(""),
 			RecordSec / (60 * 60), (RecordSec / 60) % 60, RecordSec % 60);
 	} else if (RecordManager.IsReserved()) {
@@ -708,7 +708,7 @@ void CSignalLevelStatusItem::Draw(HDC hdc, const RECT &ItemRect, const RECT &Dra
 		if (m_fShowSignalLevel) {
 			TCHAR szSignalLevel[32];
 			CoreEngine.GetSignalLevelText(m_SignalLevel, szSignalLevel, lengthof(szSignalLevel));
-			Length = StringPrintf(szText, TEXT("%s / "), szSignalLevel);
+			Length = StringPrintf(szText, TEXT("%") T_PRIS TEXT(" / "), szSignalLevel);
 		}
 		CoreEngine.GetBitRateText(m_BitRate, szText + Length, lengthof(szText) - Length);
 	} else {
@@ -716,7 +716,7 @@ void CSignalLevelStatusItem::Draw(HDC hdc, const RECT &ItemRect, const RECT &Dra
 
 		CoreEngine.GetSignalLevelText(24.52f, szSignalLevel, lengthof(szSignalLevel));
 		CoreEngine.GetBitRateText(16.73f, szBitRate, lengthof(szBitRate));
-		StringPrintf(szText, TEXT("%s / %s"), szSignalLevel, szBitRate);
+		StringPrintf(szText, TEXT("%") T_PRIS TEXT(" / %") T_PRIS, szSignalLevel, szBitRate);
 	}
 
 	DrawText(hdc, DrawRect, szText);
@@ -857,7 +857,7 @@ void CClockStatusItem::FormatTime(const LibISDB::DateTime &Time, LPTSTR pszText,
 			szTime[0] = _T('\0');
 		StringPrintf(
 			pszText, MaxLength,
-			TEXT("TOT %s %s"), szDate, szTime);
+			TEXT("TOT %") T_PRIS TEXT(" %") T_PRIS, szDate, szTime);
 	} else {
 		::GetTimeFormat(LOCALE_USER_DEFAULT, 0, &st, nullptr, pszText, MaxLength);
 	}

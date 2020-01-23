@@ -1507,7 +1507,7 @@ int CChannelPanel::CChannelEventInfo::FormatEventText(LPTSTR pszText, int MaxLen
 	TCHAR szTime[EpgUtil::MAX_EVENT_TIME_LENGTH];
 	EpgUtil::FormatEventTime(Info, szTime, lengthof(szTime));
 	return StringPrintf(
-		pszText, MaxLength, TEXT("%s %s%s%s"),
+		pszText, MaxLength, TEXT("%") T_PRIS TEXT(" %") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS,
 		szTime,
 		Info.EventName.c_str(),
 		!Info.EventText.empty() ? TEXT("\n\n") : TEXT(""),
@@ -1548,7 +1548,7 @@ void CChannelPanel::CChannelEventInfo::DrawChannelName(
 	TCHAR szText[MAX_CHANNEL_NAME + 16];
 	if (m_ChannelInfo.GetChannelNo() != 0)
 		StringPrintf(
-			szText, TEXT("%d: %s"),
+			szText, TEXT("%d: %") T_PRIS,
 			m_ChannelInfo.GetChannelNo(), m_ChannelInfo.GetName());
 	else
 		StringCopy(szText, m_ChannelInfo.GetName());
@@ -1566,7 +1566,7 @@ void CChannelPanel::CChannelEventInfo::DrawEventName(
 		TCHAR szText[256], szTime[EpgUtil::MAX_EVENT_TIME_LENGTH];
 
 		EpgUtil::FormatEventTime(Info, szTime, lengthof(szTime), EpgUtil::FormatEventTimeFlag::Hour2Digits);
-		StringPrintf(szText, TEXT("%s %s"), szTime, Info.EventName.c_str());
+		StringPrintf(szText, TEXT("%") T_PRIS TEXT(" %") T_PRIS, szTime, Info.EventName.c_str());
 		TextDraw.Draw(szText, Rect, LineHeight);
 	}
 }

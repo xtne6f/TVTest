@@ -235,7 +235,7 @@ INT_PTR CInitialSettings::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 					}
 					StringUtility::Format(
 						Message,
-						TEXT("%s のデコーダが見付からないため、%s の映像は再生できません。\n")
+						TEXT("%") T_PRIS TEXT(" のデコーダが見付からないため、%") T_PRIS TEXT(" の映像は再生できません。\n")
 						TEXT("映像を再生するにはデコーダをインストールしてください。"),
 						Codecs.c_str(), Codecs.c_str());
 					::MessageBox(hDlg, Message.c_str(), TEXT("お知らせ"), MB_OK | MB_ICONINFORMATION);
@@ -305,7 +305,7 @@ INT_PTR CInitialSettings::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 				CAppMain::CreateDirectoryResult CreateDirResult =
 					GetAppClass().CreateDirectory(
 						hDlg, szRecordFolder,
-						TEXT("録画ファイルの保存先フォルダ \"%s\" がありません。\n")
+						TEXT("録画ファイルの保存先フォルダ \"%") T_PRIS TEXT("\" がありません。\n")
 						TEXT("作成しますか?"));
 				if (CreateDirResult == CAppMain::CreateDirectoryResult::Error) {
 					SetDlgItemFocus(hDlg, IDC_INITIALSETTINGS_RECORDFOLDER);

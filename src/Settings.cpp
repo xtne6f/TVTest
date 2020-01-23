@@ -401,7 +401,7 @@ bool CSettings::Write(LPCTSTR pszValueName, const LOGFONT *pFont)
 	if (pFont->lfStrikeOut)
 		Flags |= FONT_FLAG_STRIKEOUT;
 	StringPrintf(
-		szData, TEXT("%s,%d,%d,%u"),
+		szData, TEXT("%") T_PRIS TEXT(",%d,%d,%u"),
 		pFont->lfFaceName, pFont->lfHeight, pFont->lfWeight, Flags);
 	return Write(pszValueName, szData);
 }

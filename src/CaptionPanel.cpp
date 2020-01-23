@@ -641,7 +641,7 @@ void CCaptionPanel::OnCaption(
 #ifdef _DEBUG
 							TCHAR szTrace[1024];
 							StringCopy(szTrace, &pszBuff[Pos], NextPos - Pos + 1);
-							TRACE(TEXT("Caption exclude : %s\n"), szTrace);
+							TRACE(TEXT("Caption exclude : %") T_PRIS TEXT("\n"), szTrace);
 #endif
 							memmove(
 								&pszBuff[Pos], &pszBuff[NextPos],
@@ -835,7 +835,7 @@ bool CCaptionDRCSMap::Load(LPCTSTR pszFileName)
 				m_HashMap.emplace(MD5, Entry.Value);
 				/*
 				TRACE(
-					TEXT("DRCS map : %02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X = %s\n"),
+					TEXT("DRCS map : %02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X = %") T_PRIS TEXT("\n"),
 					MD5.Value[0], MD5.Value[1], MD5.Value[2], MD5.Value[3], MD5.Value[4], MD5.Value[5], MD5.Value[6], MD5.Value[7],
 					MD5.Value[8], MD5.Value[9], MD5.Value[10], MD5.Value[11], MD5.Value[12], MD5.Value[13], MD5.Value[14], MD5.Value[15],
 					Entry.Value.c_str());
@@ -854,7 +854,7 @@ LPCTSTR CCaptionDRCSMap::GetString(WORD Code)
 	CodeMap::iterator itr = m_CodeMap.find(Code);
 
 	if (itr != m_CodeMap.end()) {
-		TRACE(TEXT("DRCS : Code %d %s\n"), Code, itr->second.c_str());
+		TRACE(TEXT("DRCS : Code %d %") T_PRIS TEXT("\n"), Code, itr->second.c_str());
 		return itr->second.c_str();
 	}
 	return nullptr;
@@ -883,7 +883,7 @@ bool CCaptionDRCSMap::SetDRCS(uint16_t Code, const DRCSBitmap *pBitmap)
 		MD5.Value[8], MD5.Value[9], MD5.Value[10], MD5.Value[11], MD5.Value[12], MD5.Value[13], MD5.Value[14], MD5.Value[15]);
 	HashMap::iterator itr = m_HashMap.find(MD5);
 	if (itr != m_HashMap.end()) {
-		TRACE(TEXT("DRCS assign %d = %s\n"), Code, itr->second.c_str());
+		TRACE(TEXT("DRCS assign %d = %") T_PRIS TEXT("\n"), Code, itr->second.c_str());
 		m_CodeMap[Code] = itr->second;
 	}
 

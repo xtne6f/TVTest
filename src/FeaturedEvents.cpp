@@ -356,7 +356,7 @@ static BOOL ServiceListViewGetInfoTip(
 
 	StringPrintf(
 		pGetInfoTip->pszText, pGetInfoTip->cchTextMax,
-		TEXT("%s\r\nサービス: %d (0x%04x)\r\nネットワークID: %d (0x%04x)\r\nTSID: %d (0x%04x)"),
+		TEXT("%") T_PRIS TEXT("\r\nサービス: %d (0x%04x)\r\nネットワークID: %d (0x%04x)\r\nTSID: %d (0x%04x)"),
 		pChannelInfo->GetName(),
 		pChannelInfo->GetServiceID(), pChannelInfo->GetServiceID(),
 		pChannelInfo->GetNetworkID(), pChannelInfo->GetNetworkID(),
