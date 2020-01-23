@@ -1,3 +1,33 @@
+cmake_minimum_required(VERSION 3.8)
+
+project(libpng C)
+
+add_library(${PROJECT_NAME} STATIC
+  png.c
+  pngerror.c
+  pngget.c
+  pngmem.c
+  pngpread.c
+  pngread.c
+  pngrio.c
+  pngrtran.c
+  pngrutil.c
+  pngset.c
+  pngtrans.c
+  pngwio.c
+  pngwrite.c
+  pngwtran.c
+  pngwutil.c
+  contrib/intel/filter_sse2_intrinsics.c
+  contrib/intel/intel_init.c
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE PNG_INTEL_SSE)
+target_include_directories(${PROJECT_NAME} PRIVATE ../zlib)
+
+
+
+#[==================================================[ (COMMENT OUT)
 # CMakeLists.txt
 
 # Copyright (C) 2007,2009-2016 Glenn Randers-Pehrson
@@ -802,3 +832,4 @@ endif()
 # pexports libpng.dll > libpng.def
 # lib /def:libpng.def /machine:x86
 
+]==================================================]

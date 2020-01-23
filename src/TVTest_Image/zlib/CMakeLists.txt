@@ -1,3 +1,24 @@
+cmake_minimum_required(VERSION 3.8)
+
+project(zlib C)
+
+add_library(${PROJECT_NAME} STATIC
+  adler32.c
+  compress.c
+  crc32.c
+  deflate.c
+  infback.c
+  inffast.c
+  inflate.c
+  inftrees.c
+  trees.c
+  uncompr.c
+  zutil.c
+)
+
+
+
+#[==================================================[ (COMMENT OUT)
 cmake_minimum_required(VERSION 2.4.4)
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS ON)
 
@@ -247,3 +268,4 @@ if(HAVE_OFF64_T)
     target_link_libraries(minigzip64 zlib)
     set_target_properties(minigzip64 PROPERTIES COMPILE_FLAGS "-D_FILE_OFFSET_BITS=64")
 endif()
+]==================================================]
