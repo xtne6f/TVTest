@@ -105,7 +105,7 @@ bool CCommandManager::InvokeCommand(int ID, InvokeFlag Flags) const
 	if (!Info.Handler)
 		return false;
 
-	TRACE(TEXT("CCommandManager::InvokeCommand() : %d %s\n"), ID, GetCommandIDText(ID).c_str());
+	TRACE(TEXT("CCommandManager::InvokeCommand() : %d %") T_PRIS TEXT("\n"), ID, GetCommandIDText(ID).c_str());
 
 	InvokeParameters Params;
 

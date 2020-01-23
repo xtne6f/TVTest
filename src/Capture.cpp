@@ -502,7 +502,7 @@ void CCaptureWindow::SetTitle()
 			if (m_Image->GetBitmapInfoHeader(&bmih)) {
 				StringPrintf(
 					szTitle,
-					TEXT("%s - %d x %d (%d bpp)"),
+					TEXT("%") T_PRIS TEXT(" - %d x %d (%d bpp)"),
 					CAPTURE_TITLE_TEXT, bmih.biWidth, abs(bmih.biHeight), bmih.biBitCount);
 			}
 		}

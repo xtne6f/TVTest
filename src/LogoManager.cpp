@@ -237,7 +237,7 @@ bool CLogoManager::LoadLogoFile(LPCTSTR pszFileName)
 				LibISDB::FileStream::OpenFlag::Read |
 				LibISDB::FileStream::OpenFlag::ShareRead |
 				LibISDB::FileStream::OpenFlag::SequentialRead)) {
-		TRACE(TEXT("CLogoManager::LoadLogoFile() : File open error \"%s\"\n"), pszFileName);
+		TRACE(TEXT("CLogoManager::LoadLogoFile() : File open error \"%") T_PRIS TEXT("\"\n"), pszFileName);
 		return false;
 	}
 

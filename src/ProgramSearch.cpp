@@ -267,7 +267,7 @@ bool CEventSearchSettings::ToString(String *pString) const
 
 	StringUtility::Format(
 		Buffer,
-		TEXT(",%u,%d,%s,%u,%d:%02d,%d:%02d,%u,%u,%d,%d"),
+		TEXT(",%u,%d,%") T_PRIS TEXT(",%u,%d:%02d,%d:%02d,%u,%u,%d,%d"),
 		Flags,
 		Genre1,
 		szGenre2,
@@ -525,7 +525,7 @@ bool CEventSearchSettingsList::Load(CSettings &Settings, LPCTSTR pszPrefix)
 	String Value;
 
 	for (int i = 0;; i++) {
-		StringPrintf(szKey, TEXT("%s%d"), pszPrefix, i);
+		StringPrintf(szKey, TEXT("%") T_PRIS TEXT("%d"), pszPrefix, i);
 		if (!Settings.Read(szKey, &Value))
 			break;
 		CEventSearchSettings SearchSettings;
@@ -544,7 +544,7 @@ bool CEventSearchSettingsList::Save(CSettings &Settings, LPCTSTR pszPrefix) cons
 	String Value;
 
 	for (size_t i = 0; i < m_List.size(); i++) {
-		StringPrintf(szKey, TEXT("%s%d"), pszPrefix, (int)i);
+		StringPrintf(szKey, TEXT("%") T_PRIS TEXT("%d"), pszPrefix, (int)i);
 		m_List[i]->ToString(&Value);
 		Settings.Write(szKey, Value);
 	}
@@ -1538,7 +1538,7 @@ INT_PTR CEventSearchSettingsDialog::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam,
 
 				TCHAR szText[lengthof(szName) + 64];
 				StringPrintf(
-					szText, TEXT("設定 \"%s\" を%sしました。"),
+					szText, TEXT("設定 \"%") T_PRIS TEXT("\" を%") T_PRIS TEXT("しました。"),
 					szName, pSettings == nullptr ? TEXT("保存") : TEXT("上書き"));
 				::MessageBox(hDlg, szText, TEXT("設定の保存"), MB_OK | MB_ICONINFORMATION);
 			}
@@ -1560,7 +1560,7 @@ INT_PTR CEventSearchSettingsDialog::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam,
 						ComboBox_DeleteString(hwndComboBox, Index);
 
 						TCHAR szText[lengthof(szName) + 64];
-						StringPrintf(szText, TEXT("設定 \"%s\" を削除しました。"), szName);
+						StringPrintf(szText, TEXT("設定 \"%") T_PRIS TEXT("\" を削除しました。"), szName);
 						::MessageBox(hDlg, szText, TEXT("設定の削除"), MB_OK | MB_ICONINFORMATION);
 					}
 				}
@@ -2300,7 +2300,7 @@ bool CProgramSearchDialog::AddSearchResult(CSearchEventInfo *pEventInfo)
 	EpgUtil::EpgTimeToDisplayTime(&End);
 	StringPrintf(
 		szText,
-		TEXT("%02d/%02d(%s) %02d:%02d～%02d:%02d"),
+		TEXT("%02d/%02d(%") T_PRIS TEXT(") %02d:%02d～%02d:%02d"),
 		Start.Month, Start.Day,
 		GetDayOfWeekText(Start.DayOfWeek),
 		Start.Hour, Start.Minute,
@@ -2371,7 +2371,7 @@ int CProgramSearchDialog::FormatEventTimeText(const LibISDB::EventInfo *pEventIn
 		szEndTime[0] = '\0';
 	}
 	return StringPrintf(
-		pszText, MaxLength, TEXT("%d/%d/%d(%s) %d:%02d%s\r\n"),
+		pszText, MaxLength, TEXT("%d/%d/%d(%") T_PRIS TEXT(") %d:%02d%") T_PRIS TEXT("\r\n"),
 		pEventInfo->StartTime.Year,
 		pEventInfo->StartTime.Month,
 		pEventInfo->StartTime.Day,
@@ -2599,7 +2599,7 @@ void CProgramSearchDialog::OnSearch()
 	if (!m_SearchSettings.Keyword.empty()) {
 		if (m_SearchSettings.fGenre)
 			StatusFormat.Append(TEXT("指定ジャンルから "));
-		StatusFormat.AppendFormat(TEXT("%s に一致する番組"), m_SearchSettings.Keyword.c_str());
+		StatusFormat.AppendFormat(TEXT("%") T_PRIS TEXT(" に一致する番組"), m_SearchSettings.Keyword.c_str());
 	} else {
 		if (m_SearchSettings.fGenre)
 			StatusFormat.Append(TEXT("指定ジャンルの番組"));

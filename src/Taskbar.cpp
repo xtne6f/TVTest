@@ -83,7 +83,7 @@ bool CTaskbarManager::Initialize(HWND hwnd)
 				m_fAppIDInvalid = true;
 				App.AddLog(
 					CLogItem::LogType::Error,
-					TEXT("AppID \"%s\" を設定できません。(%08x)"),
+					TEXT("AppID \"%") T_PRIS TEXT("\" を設定できません。(%08x)"),
 					m_AppID.c_str(), hr);
 			}
 		}
@@ -377,7 +377,7 @@ HRESULT CTaskbarManager::AddTaskList(ICustomDestinationList *pcdl)
 					StringCopy(szArgs, L"/jumplist /s /epgonly");
 				} else {
 					StringPrintf(
-						szArgs, L"/jumplist /s /command %s",
+						szArgs, L"/jumplist /s /command %ls",
 						App.CommandManager.GetCommandIDText(Command).c_str());
 				}
 				App.CommandManager.GetCommandText(Command, szTitle, lengthof(szTitle));
@@ -567,13 +567,13 @@ HRESULT CTaskbarManager::AddRecentChannelsCategory(ICustomDestinationList *pcdl)
 				if (Result != ERROR_SUCCESS && Result != ERROR_ALREADY_EXISTS) {
 					App.AddLog(
 						CLogItem::LogType::Error,
-						TEXT("ジャンプリストアイコンフォルダ \"%s\" が作成できません。"),
+						TEXT("ジャンプリストアイコンフォルダ \"%") T_PRIS TEXT("\" が作成できません。"),
 						szIconDir);
 					fShowIcon = false;
 				} else if (Result == ERROR_SUCCESS) {
 					App.AddLog(
 						CLogItem::LogType::Information,
-						TEXT("ジャンプリストアイコンフォルダ \"%s\" を作成しました。"),
+						TEXT("ジャンプリストアイコンフォルダ \"%") T_PRIS TEXT("\" を作成しました。"),
 						szIconDir);
 				}
 			}
@@ -600,7 +600,7 @@ HRESULT CTaskbarManager::AddRecentChannelsCategory(ICustomDestinationList *pcdl)
 			Driver += L'"';
 		}
 		StringUtility::Format(
-			Item.Args, L"/jumplist /d %s /chspace %d /chi %d /nid %d /sid %d",
+			Item.Args, L"/jumplist /d %ls /chspace %d /chi %d /nid %d /sid %d",
 			!Driver.empty() ? Driver.c_str() : pszTunerName,
 			pChannel->GetSpace(),
 			pChannel->GetChannelIndex(),
@@ -608,7 +608,7 @@ HRESULT CTaskbarManager::AddRecentChannelsCategory(ICustomDestinationList *pcdl)
 		StringCopy(szTuner, pszTunerName);
 		::PathRemoveExtensionW(szTuner);
 		StringUtility::Format(
-			Item.Description, L"%s (%s)",
+			Item.Description, L"%ls (%ls)",
 			pChannel->GetName(),
 			::StrCmpNIW(szTuner, L"BonDriver_", 10) == 0 ? szTuner + 10 : szTuner);
 

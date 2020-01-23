@@ -195,7 +195,7 @@ bool CZoomOptions::WriteSettings(CSettings &Settings)
 
 		StringPrintf(szName, TEXT("ZoomList%d"), i);
 		StringPrintf(
-			szText, TEXT("%s,%d"),
+			szText, TEXT("%") T_PRIS TEXT(",%d"),
 			pCommandManager->GetCommandIDText(m_DefaultZoomList[Index].Command).c_str(),
 			Info.fVisible ? 1 : 0);
 		Settings.Write(szName, szText);

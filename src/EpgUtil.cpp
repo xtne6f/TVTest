@@ -104,7 +104,7 @@ int FormatEventTime(
 		}
 		StringPrintf(
 			szDate + Length, lengthof(szDate) - Length,
-			TEXT("%d/%d(%s) "),
+			TEXT("%d/%d(%") T_PRIS TEXT(") "),
 			stStart.wMonth,
 			stStart.wDay,
 			GetDayOfWeekText(stStart.wDayOfWeek));
@@ -138,7 +138,7 @@ int FormatEventTime(
 	}
 
 	return StringPrintf(
-		pszTime, MaxLength, TEXT("%s%s%s%s"),
+		pszTime, MaxLength, TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS TEXT("%") T_PRIS,
 		szDate,
 		szStartTime,
 		!(Flags & FormatEventTimeFlag::StartOnly) ? TEXT("～") : TEXT(""),

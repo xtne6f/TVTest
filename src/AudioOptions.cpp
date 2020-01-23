@@ -216,7 +216,7 @@ bool CAudioOptions::WriteSettings(CSettings &Settings)
 			const DWORD Lang = m_LanguagePriority[i].Language;
 			TCHAR szValue[8];
 			StringPrintf(
-				szValue, TEXT("%c%c%c%s"),
+				szValue, TEXT("%c%c%c%") T_PRIS,
 				(Lang >> 16), (Lang >> 8) & 0xFF, Lang & 0xFF,
 				m_LanguagePriority[i].fSub ? TEXT("2") : TEXT(""));
 			Settings.Write(szKey, szValue);

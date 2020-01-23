@@ -343,7 +343,7 @@ bool CCaptureOptions::GenerateFileName(
 		if (Result != ERROR_SUCCESS && Result != ERROR_ALREADY_EXISTS) {
 			GetAppClass().AddLog(
 				CLogItem::LogType::Error,
-				TEXT("キャプチャの保存先フォルダ \"%s\" を作成できません。"),
+				TEXT("キャプチャの保存先フォルダ \"%") T_PRIS TEXT("\" を作成できません。"),
 				SaveFolder.c_str());
 			return false;
 		}
@@ -610,7 +610,7 @@ INT_PTR CCaptureOptions::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
 				CAppMain::CreateDirectoryResult CreateDirResult =
 					GetAppClass().CreateDirectory(
 						hDlg, SaveFolder.c_str(),
-						TEXT("キャプチャ画像の保存先フォルダ \"%s\" がありません。\n")
+						TEXT("キャプチャ画像の保存先フォルダ \"%") T_PRIS TEXT("\" がありません。\n")
 						TEXT("作成しますか?"));
 				if (CreateDirResult == CAppMain::CreateDirectoryResult::Error) {
 					SettingError();

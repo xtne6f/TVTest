@@ -560,7 +560,7 @@ void CTSProcessorManager::OpenFilter(
 	const FilterInfo &Filter, FilterOpenFlag FilterOpenFlags)
 {
 	TRACE(
-		TEXT("CTSProcessorManager::OpenFilter() : %s %s %s\n"),
+		TEXT("CTSProcessorManager::OpenFilter() : %") T_PRIS TEXT(" %") T_PRIS TEXT(" %") T_PRIS TEXT("\n"),
 		Filter.Module.c_str(), Filter.Device.c_str(), Filter.Filter.c_str());
 
 	// オープンに失敗したフィルタを繰り返しオープンしようとするのを避けるため、
@@ -577,14 +577,14 @@ void CTSProcessorManager::OpenFilter(
 					|| !IsEqualFileName(pTSProcessor->GetModuleName().c_str(), Filter.Module.c_str())) {
 				if (!pTSProcessor->LoadModule(Filter.Module.c_str())) {
 					pSettings->m_fLastOpenFailed = true;
-					App.AddLog(CLogItem::LogType::Error, TEXT("\"%s\" を読み込めません。"), Filter.Module.c_str());
+					App.AddLog(CLogItem::LogType::Error, TEXT("\"%") T_PRIS TEXT("\" を読み込めません。"), Filter.Module.c_str());
 					return;
 				}
 
 				CTSProcessor::FilterModuleInfo ModuleInfo;
 				pTSProcessor->GetModuleInfo(&ModuleInfo);
 				App.AddLog(
-					TEXT("モジュール \"%s\" (%s %s) を読み込みました。"),
+					TEXT("モジュール \"%") T_PRIS TEXT("\" (%") T_PRIS TEXT(" %") T_PRIS TEXT(") を読み込みました。"),
 					Filter.Module.c_str(), ModuleInfo.Name.c_str(), ModuleInfo.Version.c_str());
 			}
 		} else {
@@ -608,9 +608,9 @@ void CTSProcessorManager::OpenFilter(
 	pSettings->m_fLastOpenFailed = !fResult;
 	if (!fResult) {
 		if (!Filter.Filter.empty())
-			App.AddLog(CLogItem::LogType::Error, TEXT("TSフィルター \"%s\" : \"%s\" をオープンできません。"), DeviceName.c_str(), Filter.Filter.c_str());
+			App.AddLog(CLogItem::LogType::Error, TEXT("TSフィルター \"%") T_PRIS TEXT("\" : \"%") T_PRIS TEXT("\" をオープンできません。"), DeviceName.c_str(), Filter.Filter.c_str());
 		else
-			App.AddLog(CLogItem::LogType::Error, TEXT("TSフィルター \"%s\" をオープンできません。"), DeviceName.c_str());
+			App.AddLog(CLogItem::LogType::Error, TEXT("TSフィルター \"%") T_PRIS TEXT("\" をオープンできません。"), DeviceName.c_str());
 
 		if (!!(FilterOpenFlags & FilterOpenFlag::RetryDialog)) {
 			String Message;
@@ -664,7 +664,7 @@ void CTSProcessorManager::CloseFilter(CTSProcessor *pTSProcessor)
 	if (pTSProcessor->IsModuleLoaded()) {
 		String ModuleName = pTSProcessor->GetModuleName();
 		pTSProcessor->UnloadModule();
-		GetAppClass().AddLog(TEXT("モジュール \"%s\" を開放しました。"), ModuleName.c_str());
+		GetAppClass().AddLog(TEXT("モジュール \"%") T_PRIS TEXT("\" を開放しました。"), ModuleName.c_str());
 	}
 #endif
 }

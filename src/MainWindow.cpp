@@ -3133,7 +3133,7 @@ bool CMainWindow::OnInitMenuPopup(HMENU hmenu)
 						if (Info.DualMono == CAudioManager::DualMonoMode::Both) {
 							TCHAR szLang2[LibISDB::MAX_LANGUAGE_TEXT_LENGTH];
 							LibISDB::GetLanguageText_ja(Info.Language2, szLang2, lengthof(szLang2));
-							Length += StringPrintf(pszText + Length, MaxText - Length, TEXT("+%s"), szLang2);
+							Length += StringPrintf(pszText + Length, MaxText - Length, TEXT("+%") T_PRIS, szLang2);
 						}
 					} else if (Info.IsDualMono()) {
 						Length = StringPrintf(
@@ -3151,7 +3151,7 @@ bool CMainWindow::OnInitMenuPopup(HMENU hmenu)
 						if (pszComponentType != nullptr) {
 							StringPrintf(
 								pszText + Length, MaxText - Length,
-								TEXT(" [%s]"), pszComponentType);
+								TEXT(" [%") T_PRIS TEXT("]"), pszComponentType);
 						}
 					}
 				};
@@ -3198,7 +3198,7 @@ bool CMainWindow::OnInitMenuPopup(HMENU hmenu)
 									GetAudioInfoText(AudioInfo, StreamNumber, szAudio, lengthof(szAudio));
 									StringPrintf(
 										szText + Length, lengthof(szText) - Length,
-										TEXT(": %s"), szAudio);
+										TEXT(": %") T_PRIS, szAudio);
 									Menu.Append(CM_AUDIO_FIRST + AudioIndex, szText);
 									AudioInfo.ID = CAudioManager::ID_INVALID;
 
@@ -3246,7 +3246,7 @@ bool CMainWindow::OnInitMenuPopup(HMENU hmenu)
 				int Length;
 
 				Length = StringPrintf(
-					szText, TEXT("%s%d: "),
+					szText, TEXT("%") T_PRIS TEXT("%d: "),
 					i < 9 ? TEXT("&") : TEXT(""), i + 1);
 				GetAudioInfoText(AudioInfo, StreamNumber, szText + Length, lengthof(szText) - Length);
 				Menu.Append(CM_AUDIO_FIRST + i, szText);
@@ -3474,7 +3474,7 @@ bool CMainWindow::OnInitMenuPopup(HMENU hmenu)
 				for (int i = 0; i < static_cast<int>(EsList.size()) && CM_VIDEOSTREAM_FIRST + i <= CM_VIDEOSTREAM_LAST; i++) {
 					TCHAR szText[64];
 					int Length = StringPrintf(
-						szText, TEXT("%s%d: 映像%d"),
+						szText, TEXT("%") T_PRIS TEXT("%d: 映像%d"),
 						i < 9 ? TEXT("&") : TEXT(""), i + 1, i + 1);
 					if (EsList[i].QualityLevel == 0)
 						StringCopy(szText + Length, TEXT(" (降雨対応放送)"), lengthof(szText) - Length);
@@ -4776,7 +4776,7 @@ void CMainWindow::HookChildWindow(HWND hwnd)
 	{
 		TCHAR szClass[256];
 		::GetClassName(hwnd, szClass, lengthof(szClass));
-		TRACE(TEXT("Hook window %p \"%s\"\n"), hwnd, szClass);
+		TRACE(TEXT("Hook window %p \"%") T_PRIS TEXT("\"\n"), hwnd, szClass);
 	}
 #endif
 	::SetWindowSubclass(hwnd, ChildSubclassProc, SubclassID, reinterpret_cast<DWORD_PTR>(this));
@@ -4865,7 +4865,7 @@ LRESULT CALLBACK CMainWindow::ChildSubclassProc(
 		{
 			TCHAR szClass[256];
 			::GetClassName(hwnd, szClass, lengthof(szClass));
-			TRACE(TEXT("Unhook window %p \"%s\"\n"), hwnd, szClass);
+			TRACE(TEXT("Unhook window %p \"%") T_PRIS TEXT("\"\n"), hwnd, szClass);
 		}
 #endif
 		::RemoveWindowSubclass(hwnd, ChildSubclassProc, reinterpret_cast<UINT_PTR>(pThis));
@@ -6455,7 +6455,7 @@ bool CMainWindow::CSideBarManager::GetTooltipText(int Command, LPTSTR pszText, i
 		const CChannelInfo *pChInfo = GetChannelInfoByCommand(Command);
 		if (pChInfo != nullptr) {
 			StringPrintf(
-				pszText, MaxText, TEXT("%d: %s"),
+				pszText, MaxText, TEXT("%d: %") T_PRIS,
 				(Command - CM_CHANNELNO_FIRST) + 1, pChInfo->GetName());
 			return true;
 		}

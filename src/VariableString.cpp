@@ -219,7 +219,7 @@ bool CVariableStringMap::InputParameter(HWND hDlg, int EditID, const POINT &Menu
 
 			TCHAR szText[128];
 			StringPrintf(
-				szText, TEXT("%s\t%%%s%%"),
+				szText, TEXT("%") T_PRIS TEXT("\t%%%") T_PRIS TEXT("%%"),
 				Param.pszText, Param.pszParameter);
 			::AppendMenu(hmenu, MF_STRING | MF_ENABLED, (i << 10) | (j + 1), szText);
 		}

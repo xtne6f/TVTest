@@ -507,7 +507,7 @@ INT_PTR CRecordOptions::DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				CAppMain::CreateDirectoryResult CreateDirResult =
 					GetAppClass().CreateDirectory(
 						hDlg, SaveFolder.c_str(),
-						TEXT("録画ファイルの保存先フォルダ \"%s\" がありません。\n")
+						TEXT("録画ファイルの保存先フォルダ \"%") T_PRIS TEXT("\" がありません。\n")
 						TEXT("作成しますか?"));
 				if (CreateDirResult == CAppMain::CreateDirectoryResult::Error) {
 					SettingError();

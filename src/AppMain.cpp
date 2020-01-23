@@ -432,14 +432,14 @@ bool CAppMain::LoadSettings()
 	CSettings &Settings = m_Settings;
 
 	if (!Settings.Open(m_IniFileName.c_str(), CSettings::OpenFlag::Read | CSettings::OpenFlag::WriteVolatile)) {
-		AddLog(CLogItem::LogType::Error, TEXT("設定ファイル \"%s\" を開けません。"), m_IniFileName.c_str());
+		AddLog(CLogItem::LogType::Error, TEXT("設定ファイル \"%") T_PRIS TEXT("\" を開けません。"), m_IniFileName.c_str());
 		return false;
 	}
 
 	if (!CmdLineOptions.m_IniValueList.empty()) {
 		for (const auto &Entry : CmdLineOptions.m_IniValueList) {
 			TRACE(
-				TEXT("Override INI entry : [%s] %s=%s\n"),
+				TEXT("Override INI entry : [%") T_PRIS TEXT("] %") T_PRIS TEXT("=%") T_PRIS TEXT("\n"),
 				Entry.Section.c_str(), Entry.Name.c_str(), Entry.Value.c_str());
 			if (Settings.SetSection(Entry.Section.empty() ? TEXT("Settings") : Entry.Section.c_str())) {
 				Settings.Write(Entry.Name.c_str(), Entry.Value);
@@ -582,9 +582,9 @@ bool CAppMain::SaveSettings(SaveSettingsFlag Flags)
 		TCHAR szMessage[64 + MAX_PATH];
 		StringPrintf(
 			szMessage,
-			TEXT("設定ファイル \"%s\" を開けません。"),
+			TEXT("設定ファイル \"%") T_PRIS TEXT("\" を開けません。"),
 			m_IniFileName.c_str());
-		AddLog(CLogItem::LogType::Error, TEXT("%s"), szMessage);
+		AddLog(CLogItem::LogType::Error, TEXT("%") T_PRIS, szMessage);
 		if (!Core.IsSilent())
 			UICore.GetSkin()->ShowErrorMessage(szMessage);
 		return false;
@@ -727,7 +727,7 @@ int CAppMain::Main(HINSTANCE hInstance, LPCTSTR pszCmdLine, int nCmdShow)
 
 	// コマンドラインの解析
 	if (pszCmdLine[0] != _T('\0')) {
-		AddLog(TEXT("コマンドラインオプション : %s"), pszCmdLine);
+		AddLog(TEXT("コマンドラインオプション : %") T_PRIS, pszCmdLine);
 
 		CmdLineOptions.Parse(pszCmdLine);
 
@@ -812,7 +812,7 @@ int CAppMain::Main(HINSTANCE hInstance, LPCTSTR pszCmdLine, int nCmdShow)
 		::GetModuleFileName(nullptr, szTunerSpecFileName, lengthof(szTunerSpecFileName));
 		::PathRenameExtension(szTunerSpecFileName, TEXT(".tuner.ini"));
 		if (::PathFileExists(szTunerSpecFileName)) {
-			AddLog(TEXT("チューナー仕様定義を \"%s\" から読み込みます..."), szTunerSpecFileName);
+			AddLog(TEXT("チューナー仕様定義を \"%") T_PRIS TEXT("\" から読み込みます..."), szTunerSpecFileName);
 			DriverManager.LoadTunerSpec(szTunerSpecFileName);
 		}
 	}
@@ -859,7 +859,7 @@ int CAppMain::Main(HINSTANCE hInstance, LPCTSTR pszCmdLine, int nCmdShow)
 			::PathRenameExtension(szStyleFileName, TEXT(".style.ini"));
 		}
 		if (::PathFileExists(szStyleFileName)) {
-			AddLog(TEXT("スタイル設定を \"%s\" から読み込みます..."), szStyleFileName);
+			AddLog(TEXT("スタイル設定を \"%") T_PRIS TEXT("\" から読み込みます..."), szStyleFileName);
 			StyleManager.Load(szStyleFileName);
 		}
 	}
@@ -991,7 +991,7 @@ int CAppMain::Main(HINSTANCE hInstance, LPCTSTR pszCmdLine, int nCmdShow)
 			GetAppDirectory(szPluginDir);
 			::PathAppend(szPluginDir, TEXT("Plugins"));
 		}
-		AddLog(TEXT("プラグインを \"%s\" から読み込みます..."), szPluginDir);
+		AddLog(TEXT("プラグインを \"%") T_PRIS TEXT("\" から読み込みます..."), szPluginDir);
 		if (CmdLineOptions.m_NoLoadPlugins.size() > 0) {
 			for (const String &Plugin : CmdLineOptions.m_NoLoadPlugins)
 				ExcludePlugins.push_back(Plugin.c_str());
@@ -1326,7 +1326,7 @@ CAppMain::CreateDirectoryResult CAppMain::CreateDirectory(
 	if (!GetAbsolutePath(pszDirectory, szPath)) {
 		StringPrintf(
 			szMessage,
-			TEXT("フォルダ \"%s\" のパスが長過ぎます。"), szPath);
+			TEXT("フォルダ \"%") T_PRIS TEXT("\" のパスが長過ぎます。"), szPath);
 		::MessageBox(hwnd, szMessage, nullptr, MB_OK | MB_ICONEXCLAMATION);
 		return CreateDirectoryResult::Error;
 	}
@@ -1342,13 +1342,13 @@ CAppMain::CreateDirectoryResult CAppMain::CreateDirectory(
 		if (Result != ERROR_SUCCESS && Result != ERROR_ALREADY_EXISTS) {
 			StringPrintf(
 				szMessage,
-				TEXT("フォルダ \"%s\" を作成できません。(エラーコード %#x)"), szPath, Result);
+				TEXT("フォルダ \"%") T_PRIS TEXT("\" を作成できません。(エラーコード %#x)"), szPath, Result);
 			AddLog(CLogItem::LogType::Error, szMessage);
 			::MessageBox(hwnd, szMessage, nullptr, MB_OK | MB_ICONEXCLAMATION);
 			return CreateDirectoryResult::Error;
 		}
 
-		AddLog(CLogItem::LogType::Information, TEXT("フォルダ \"%s\" を作成しました。"), szPath);
+		AddLog(CLogItem::LogType::Information, TEXT("フォルダ \"%") T_PRIS TEXT("\" を作成しました。"), szPath);
 	}
 
 	return CreateDirectoryResult::Success;
@@ -1458,7 +1458,7 @@ bool CAppMain::GetAbsolutePath(LPCTSTR pszPath, LPTSTR pszAbsolutePath) const
 bool CAppMain::ProcessCommandLine(LPCTSTR pszCmdLine)
 {
 	AddLog(TEXT("新しいコマンドラインオプションを受信しました。"));
-	AddLog(TEXT("コマンドラインオプション : %s"), pszCmdLine);
+	AddLog(TEXT("コマンドラインオプション : %") T_PRIS, pszCmdLine);
 
 	CCommandLineOptions CmdLine;
 
@@ -1527,7 +1527,7 @@ bool CAppMain::ProcessCommandLine(LPCTSTR pszCmdLine)
 		} else {
 			AddLog(
 				CLogItem::LogType::Error,
-				TEXT("指定されたコマンド \"%s\" は無効です。"),
+				TEXT("指定されたコマンド \"%") T_PRIS TEXT("\" は無効です。"),
 				CmdLine.m_Command.c_str());
 		}
 	}

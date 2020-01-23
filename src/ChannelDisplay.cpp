@@ -897,7 +897,7 @@ void CChannelDisplay::Draw(HDC hdc, const RECT *pPaintRect)
 							if (!pEventInfo->EventName.empty()) {
 								Length += StringPrintf(
 									szText + Length, lengthof(szText) - Length,
-									TEXT("%s%s"),
+									TEXT("%") T_PRIS TEXT("%") T_PRIS,
 									Length > 0 ? TEXT(" ") : TEXT(""),
 									pEventInfo->EventName.c_str());
 							}
@@ -1348,7 +1348,7 @@ void CChannelDisplay::CTuner::GetDisplayName(int Space, LPTSTR pszName, int MaxN
 		if (pTuningSpace != nullptr) {
 			int Length = ::lstrlen(pszName);
 			if (!IsStringEmpty(pTuningSpace->GetName()))
-				StringPrintf(pszName + Length, MaxName - Length, TEXT(" [%s]"), pTuningSpace->GetName());
+				StringPrintf(pszName + Length, MaxName - Length, TEXT(" [%") T_PRIS TEXT("]"), pTuningSpace->GetName());
 			else
 				StringPrintf(pszName + Length, MaxName - Length, TEXT(" [%d]"), Space + 1);
 		}

@@ -437,7 +437,7 @@ bool CRichEditUtil::OpenLink(HWND hwndEdit, const CHARRANGE &Range)
 	szURL[Length] = _T('\0');
 	if (::StrCmpN(szURL, TEXT("www."), 4) == 0) {
 		StringCopy(szText, szURL);
-		StringPrintf(szURL, TEXT("http://%s"), szText);
+		StringPrintf(szURL, TEXT("http://%") T_PRIS, szText);
 	}
 	::ShellExecute(nullptr, TEXT("open"), szURL, nullptr, nullptr, SW_SHOWNORMAL);
 
