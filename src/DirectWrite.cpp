@@ -582,7 +582,11 @@ bool CDirectWriteRenderer::DrawText(
 				!!(Flags & DrawTextFlag::Align_Right) ?
 					DWRITE_TEXT_ALIGNMENT_TRAILING :
 				(!!(Flags & DrawTextFlag::Align_Justified) && Util::OS::IsWindows8OrLater()) ?
+#ifdef __MINGW32__
+					static_cast<DWRITE_TEXT_ALIGNMENT>(3) :
+#else
 					DWRITE_TEXT_ALIGNMENT_JUSTIFIED :
+#endif
 					DWRITE_TEXT_ALIGNMENT_LEADING);
 			pTextFormat->SetParagraphAlignment(
 				!!(Flags & DrawTextFlag::Align_VertCenter) ?

@@ -4769,7 +4769,13 @@ void CMainWindow::HookChildWindow(HWND hwnd)
 
 	// 既にサブクラス化されているか確認
 	DWORD_PTR RefData;
+#ifdef __MINGW32__
+	// なぜかインポートライブラリに存在しないため(2020年8月現在)
+	auto pFunc = GET_MODULE_FUNCTION(TEXT("comctl32.dll"), GetWindowSubclass);
+	if (pFunc != nullptr && pFunc(hwnd, ChildSubclassProc, SubclassID, &RefData) && RefData == SubclassID)
+#else
 	if (::GetWindowSubclass(hwnd, ChildSubclassProc, SubclassID, &RefData) && RefData == SubclassID)
+#endif
 		return;
 
 #ifdef _DEBUG

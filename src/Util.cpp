@@ -1255,8 +1255,15 @@ HICON LoadIconSpecificSize(HINSTANCE hinst, LPCTSTR pszName, int Width, int Heig
 
 	HICON hico;
 
+#ifdef __MINGW32__
+	// なぜかインポートライブラリに存在しないため(2020年8月現在)
+	auto pFunc = GET_MODULE_FUNCTION(TEXT("comctl32.dll"), LoadIconWithScaleDown);
+	if (pFunc != nullptr && SUCCEEDED(pFunc(hinst, pszName, Width, Height, &hico)))
+		return hico;
+#else
 	if (SUCCEEDED(::LoadIconWithScaleDown(hinst, pszName, Width, Height, &hico)))
 		return hico;
+#endif
 
 	return (HICON)::LoadImage(hinst, pszName, IMAGE_ICON, Width, Height, LR_DEFAULTCOLOR);
 }
@@ -1295,8 +1302,15 @@ HICON LoadSystemIcon(LPCTSTR pszName, int Width, int Height)
 
 	HICON hico;
 
+#ifdef __MINGW32__
+	// なぜかインポートライブラリに存在しないため(2020年8月現在)
+	auto pFunc = GET_MODULE_FUNCTION(TEXT("comctl32.dll"), LoadIconWithScaleDown);
+	if (pFunc != nullptr && SUCCEEDED(pFunc(nullptr, pszName, Width, Height, &hico)))
+		return hico;
+#else
 	if (SUCCEEDED(::LoadIconWithScaleDown(nullptr, pszName, Width, Height, &hico)))
 		return hico;
+#endif
 
 	if (Width == ::GetSystemMetrics(SM_CXICON) && Height == ::GetSystemMetrics(SM_CYICON))
 		return LoadSystemIcon(pszName, IconSizeType::Normal);

@@ -176,6 +176,9 @@ CServiceUpdateInfo::CServiceUpdateInfo(LibISDB::TSEngine *pEngine, LibISDB::Anal
 
 
 // エントリポイント
+#ifdef __MINGW32__
+__declspec(dllexport) // ASLR無効対策(CVE-2018-5392)
+#endif
 int APIENTRY _tWinMain(
 	HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/,
 	LPTSTR pszCmdLine, int nCmdShow)
