@@ -10,8 +10,12 @@
 */
 
 
+#define NOMINMAX
 #include <windows.h>
 #include <tchar.h>
+#include <algorithm>
+using std::min;
+using std::max;
 #include <gdiplus.h>
 #include <shlwapi.h>
 #include <cmath>

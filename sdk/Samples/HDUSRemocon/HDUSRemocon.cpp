@@ -13,6 +13,7 @@
 #include <windows.h>
 #include <tchar.h>
 #include <shlwapi.h>
+#include <cstddef>
 #define TVTEST_PLUGIN_CLASS_IMPLEMENT
 #include "TVTestPlugin.h"
 #include "HDUSRemocon_KeyHook.h"

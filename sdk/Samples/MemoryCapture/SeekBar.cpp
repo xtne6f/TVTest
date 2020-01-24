@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <tchar.h>
+#include <cstddef>
 #include "TVTestPlugin.h"
 #include "SeekBar.h"
 

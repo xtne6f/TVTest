@@ -12,11 +12,13 @@
 */
 
 
+#define NOMINMAX
 #include <windows.h>
 #include <windowsx.h>
 #include <shlwapi.h>
 #include <tchar.h>
 #define _USE_MATH_DEFINES
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <crtdbg.h>
@@ -870,7 +872,7 @@ void CEqualizer::Draw(HDC hdc, const RECT &rcPaint)
 	rcText.right = rc.right + m_SliderMargin;
 	rcText.top = rc.bottom + m_SliderTextMargin;
 	rcText.bottom = rcText.top + m_TextHeight;
-	rcText.top -= min(tm.tmInternalLeading, m_SliderTextMargin);
+	rcText.top -= std::min<int>(tm.tmInternalLeading, m_SliderTextMargin);
 	::DrawText(hdc, TEXT("Pre"), -1, &rcText, DT_CENTER | DT_SINGLELINE);
 
 	// 目盛

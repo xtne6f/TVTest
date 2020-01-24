@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.8)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-s,--dynamicbase,--nxcompat,--kill-at")
+
+project(HDUSRemocon CXX)
+
+add_library(${PROJECT_NAME} SHARED
+  HDUSRemocon.cpp
+  HDUSRemocon.rc
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE UNICODE)
+target_include_directories(${PROJECT_NAME} PRIVATE ../..)
+target_link_libraries(${PROJECT_NAME} -static-libgcc -static-libstdc++ shlwapi)
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
+set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".tvtp")
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin/Plugins)
+
+project(HDUSRemocon_KeyHook C)
+
+add_library(${PROJECT_NAME} SHARED
+  HDUSRemocon_KeyHook.c
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE UNICODE)
+target_link_libraries(${PROJECT_NAME} -static-libgcc)
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin/Plugins)
