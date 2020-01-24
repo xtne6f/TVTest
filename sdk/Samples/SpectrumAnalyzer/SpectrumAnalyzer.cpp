@@ -14,10 +14,14 @@
 */
 
 
+#define NOMINMAX
 #include <windows.h>
+#define _USE_MATH_DEFINES
+#include <algorithm>
+using std::min;
+using std::max;
 #include <gdiplus.h>
 #include <shlwapi.h>
-#define _USE_MATH_DEFINES
 #include <cmath>
 #define TVTEST_PLUGIN_CLASS_IMPLEMENT	// クラスとして実装
 #include "TVTestPlugin.h"

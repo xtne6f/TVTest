@@ -1,5 +1,9 @@
+#define NOMINMAX
 #include <windows.h>
 #define _USE_MATH_DEFINES
+#include <algorithm>
+using std::min;
+using std::max;
 #include <cmath>
 #include <limits>
 #include <new>

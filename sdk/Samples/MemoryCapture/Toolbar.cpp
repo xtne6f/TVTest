@@ -2,6 +2,7 @@
 #include <windowsx.h>
 #include <commctrl.h>
 #include <tchar.h>
+#include <cstddef>
 #include "TVTestPlugin.h"
 #include "Toolbar.h"
 

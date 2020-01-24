@@ -15,6 +15,7 @@
 #include <commctrl.h>
 #include <shlwapi.h>
 #include <Powrprof.h>
+#include <cstddef>
 #define TVTEST_PLUGIN_CLASS_IMPLEMENT
 #include "TVTestPlugin.h"
 #include "resource.h"

@@ -17,12 +17,16 @@
 */
 
 
+#define NOMINMAX
 #include <windows.h>
 #include <windowsx.h>
 #include <tchar.h>
 #include <shlwapi.h>
 #include <shlobj.h>
 #include <process.h>
+#include <algorithm>
+using std::min;
+using std::max;
 #include <vector>
 #include <string>
 #include <new>
@@ -741,7 +745,7 @@ void CMemoryCapture::InputStream(DWORD Format, const void *pData, SIZE_T Size)
 			m_StreamAvail = Size;
 		} else {
 			std::size_t EndPos = (m_StreamPos + m_StreamAvail) % m_StreamSize;
-			std::size_t Remain = min(m_StreamSize - EndPos, Size);
+			std::size_t Remain = min<std::size_t>(m_StreamSize - EndPos, Size);
 
 			if (Remain > 0)
 				::CopyMemory(m_pStreamBuffer + EndPos, pData, Remain);
