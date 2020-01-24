@@ -13,6 +13,7 @@
 
 #include <windows.h>
 #include <tchar.h>
+#include <cstddef>
 #define TVTEST_PLUGIN_CLASS_IMPLEMENT
 #include "TVTestPlugin.h"
 #include "resource.h"

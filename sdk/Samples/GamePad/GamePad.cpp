@@ -14,6 +14,7 @@
 #include <tchar.h>
 #include <shlwapi.h>
 #include <dbt.h>
+#include <cstddef>
 #define TVTEST_PLUGIN_CLASS_IMPLEMENT
 #include "TVTestPlugin.h"
 #include "resource.h"
